@@ -1,43 +1,53 @@
 import React from 'react';
 import { Route, Link, Switch } from 'react-router-dom';
 import './App.css';
-import ErrorPage from '../ErrorBoundary/ErrorBoundary';
 import wwContext from '../wwContext';
+import ErrorPage from '../ErrorBoundary/ErrorBoundary';
 // To Do:
-// import Header from '../Header/Header';
-// import Sidebar from '../Sidebar/Sidebar';
+import Header from '../Header/Header';
 import JobCardsMain from '../JobCardsMain/JobCardsMain';
+import StudyCardsMain from '../StudyCardsMain/StudyCardsMain.js';
+import SideBar from '../Sidebar/Sidebar';
+import Login from '../Login/Login';
 
 export default class App extends React.Component {
   state = {
-    userLoggedIn: 'smith-j',
-    cardsDisplayed: 'jobs',
-    cardsData: [],
+    userName: '',
     loading: false,
+    error: false,
+    errorMsg: '',
   };
 
-  componentDidCatch() {
-    this.setState({ loading: true });
+  setUserName = (userName) => {
+    this.setState({ userName });
+    console.log(this.state.userName);
+  };
+
+  renderMainRoutes() {
+    return (
+      <Switch>
+        <Route exact path='/:userName/jobs' component={JobCardsMain} />
+        <Route exact path='/:userName/study' component={StudyCardsMain} />
+        <Route path='/changeuser' component={Login} />
+      </Switch>
+    );
   }
-
-  cardsStateSwitch = (cardType) => {
-    this.setState({ cardsDisplayed: cardType });
-  };
 
   render() {
     const value = {
-      userLoggedIn: this.state.userLoggedIn,
-      cardsData: this.state.cardsData,
-      cardStateSwitch: this.cardsStateSwitch,
+      userName: this.state.userName,
+      setUserName: this.setUserName,
     };
     return (
-      <ErrorPage>
-        <wwContext.Provider value={value}>
+      <wwContext.Provider value={value}>
+        <ErrorPage>
           <div>
-            <JobCardsMain />
+            <Header />
+            <SideBar />
+            <main>{this.renderMainRoutes()}</main>
           </div>
-        </wwContext.Provider>
-      </ErrorPage>
+        </ErrorPage>
+      </wwContext.Provider>
     );
   }
 }

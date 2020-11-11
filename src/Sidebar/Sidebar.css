@@ -1,0 +1,28 @@
+.sidebar {
+  height: 100%;
+  width: 160px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: slategray;
+  overflow-x: hidden;
+  padding-top: 20px;
+  text-align: center;
+}
+
+.sidebar ul {
+  text-align: center;
+  list-style: none;
+  list-style-position: inside;
+  margin: 0;
+  padding: 0;
+  padding-left: 10px;
+}
+
+.logo-box {
+  font-size: 2rem;
+  border: 1px solid black;
+  height: 150px;
+  margin-top: -20px;
+}

@@ -1,0 +1,11 @@
+header {
+  background: grey;
+  margin-left: 150px;
+  margin-top: -10px;
+  height: 75px;
+  padding-top: 10px;
+}
+
+header h1 {
+  margin-left: 20px;
+}

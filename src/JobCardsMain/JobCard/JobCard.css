@@ -1,0 +1,59 @@
+.cardTitle {
+  border: 6px solid purple;
+  margin-bottom: -10px;
+}
+
+.card-contacts {
+  display: flex;
+  justify-content: space-evenly;
+  margin: -5px 10px 10px 10px;
+  border: 2px solid black;
+}
+.contact {
+  border: 3px solid red;
+  line-height: 20%;
+  font-size: 0.9em;
+}
+.no-contacts {
+  font-size: 1.2rem;
+  padding: 20px;
+}
+
+.card-events {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-evenly;
+  margin: -5px 10px 10px 10px;
+  border: 2px solid black;
+}
+.event {
+  border: 3px solid green;
+  width: 45%;
+  align-self: center;
+  font-size: 0.9em;
+}
+.no-events {
+  font-size: 1.2rem;
+  padding: 20px;
+}
+
+.c-email {
+  font-size: 0.8em;
+}
+
+.contact button {
+  font-size: 0.9em;
+  padding: 0;
+}
+
+.cardEvents {
+  display: flex;
+  justify-content: space-evenly;
+  flex-flow: column wrap;
+}
+
+.card-comments-container textarea {
+  width: 80%;
+  height: 100px;
+  resize: none;
+}

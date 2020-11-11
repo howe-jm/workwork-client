@@ -1,0 +1,18 @@
+.CardsDisplay {
+  display: flex;
+  border: 1px solid black;
+  width: auto;
+  text-align: center;
+  flex-flow: row wrap;
+  margin-left: 150px;
+}
+
+.oneCard {
+  display: flex;
+  flex-flow: column wrap;
+  border: 1px solid blue;
+  width: 450px;
+  justify-content: flex-start;
+  line-height: 20%;
+  margin: 5px;
+}
