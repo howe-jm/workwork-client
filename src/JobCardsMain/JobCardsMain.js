@@ -27,7 +27,7 @@ export default class JobCardsMain extends React.Component {
     };
     const username = this.state.userName;
 
-    Promise.all([fetch(`${config.API_ENDPOINT}/jobs/${username}`, requestOptions)])
+    Promise.all([fetch(`http://localhost:8000/api/jobs/${username}`, requestOptions)])
       .then(([cards]) => {
         if (!cards.ok) return cards.json().then((e) => Promise.reject(e));
         return Promise.all([cards.json()]);
@@ -41,7 +41,6 @@ export default class JobCardsMain extends React.Component {
           card.editHeader = false;
           return null;
         });
-        console.log(cardsData);
         this.setState({ cardsData });
       })
       .then(() => this.setState({ loading: false }))
@@ -96,7 +95,6 @@ export default class JobCardsMain extends React.Component {
 
   handleAddNewContact = (cardId, values) => {
     const username = this.state.userName;
-    // Todo: POST contacts API call
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
 
@@ -109,7 +107,7 @@ export default class JobCardsMain extends React.Component {
       redirect: 'follow',
     };
 
-    fetch(`${config.API_ENDPOINT}/jobs/${username}/contacts/${cardId}`, requestOptions)
+    fetch(`http://localhost:8000/api/jobs/${username}/contacts/${cardId}`, requestOptions)
       .then((res) => {
         if (!res.ok) return res.json().then((e) => Promise.reject(e));
         return res.json();
@@ -117,7 +115,6 @@ export default class JobCardsMain extends React.Component {
       .then((result) => {
         let cardToChange = this.state.cardsData.findIndex((cards) => cards.id === cardId);
         let dataState = this.state.cardsData;
-        console.log(result);
         dataState[cardToChange].contacts.push(result);
         dataState[cardToChange].addingContact = false;
         this.setState({ cardsData: dataState });
@@ -128,7 +125,6 @@ export default class JobCardsMain extends React.Component {
   };
 
   handleDeleteContact = (cardId, contId) => {
-    console.log(cardId, contId);
     const username = this.state.userName;
 
     var requestOptions = {
@@ -137,7 +133,7 @@ export default class JobCardsMain extends React.Component {
     };
 
     fetch(
-      `${config.API_ENDPOINT}/jobs/${username}/contacts/delete/${contId}`,
+      `http://localhost:8000/api/jobs/${username}/contacts/delete/${contId}`,
       requestOptions
     )
       .then((res) => {
