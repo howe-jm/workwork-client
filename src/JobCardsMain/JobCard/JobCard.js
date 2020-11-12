@@ -10,24 +10,34 @@ export default class JobCard extends React.Component {
     return this.props.contacts.length === 0 ? (
       <div className='no-contacts'>No contacts yet!</div>
     ) : (
-      this.props.contacts.map((contact) => (
-        <div className='contact' key={contact.id}>
-          <h4>{contact.contactName}</h4>
-          <p>{contact.contactTitle}</p>
-          <p>{contact.contactNumber}</p>
-          <p className='c-email'>{contact.contactEmail}</p>
-          <div className='cont-buttons'>
-            <form className='contact-mod-form'>
-              <div className='edit-icon'>
-                <img src={require('../../images/pencil.png')} alt='Edit' />
-              </div>
-              <div className='edit-icon'>
-                <img src={require('../../images/delete.png')} alt='Delete' />
-              </div>
-            </form>
+      this.props.contacts.map((contact) =>
+        contact.editing ? (
+          <div>Editing this contact</div>
+        ) : (
+          <div className='contact' key={contact.id}>
+            <h4>{contact.contactName}</h4>
+            <p>{contact.contactTitle}</p>
+            <p>{contact.contactNumber}</p>
+            <p className='c-email'>{contact.contactEmail}</p>
+            <div className='cont-buttons'>
+              <form className='contact-mod-form'>
+                <div className='edit-icon'>
+                  <img
+                    src={require('../../images/pencil.png')}
+                    onClick={() =>
+                      this.props.changeContactState(contact.cardId, contact.id)
+                    }
+                    alt='Edit'
+                  />
+                </div>
+                <div className='edit-icon'>
+                  <img src={require('../../images/delete.png')} alt='Delete' />
+                </div>
+              </form>
+            </div>
           </div>
-        </div>
-      ))
+        )
+      )
     );
   };
 
@@ -99,7 +109,7 @@ export default class JobCard extends React.Component {
         </div>
         <div className='card-comments-container'>
           <form>
-            <textarea></textarea>
+            <textarea value={this.props.comments}></textarea>
             <p>
               <button>Save</button>
             </p>

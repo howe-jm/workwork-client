@@ -29,6 +29,9 @@ export default class JobCardsMain extends React.Component {
         return Promise.all([cards.json()]);
       })
       .then(([cardsData]) => {
+        cardsData.map((card) =>
+          card.contacts.map((contact) => (contact.editing = false))
+        );
         this.setState({ cardsData });
       })
       .then(() => this.setState({ loading: false }))
@@ -36,6 +39,16 @@ export default class JobCardsMain extends React.Component {
         this.setState({ error: true, errorMsg: `${error}` });
       });
   }
+
+  changeContactState = (card, id) => {
+    let cardToChange = this.state.cardsData.findIndex((cards) => cards.id === card);
+    let contToChange = this.state.cardsData[cardToChange].contacts.findIndex(
+      (contact) => contact.id === id
+    );
+    let dataState = this.state.cardsData;
+    dataState[cardToChange].contacts[contToChange].editing = true;
+    this.setState({ cardsData: dataState });
+  };
 
   render() {
     const { cardsData } = this.state;
@@ -54,6 +67,8 @@ export default class JobCardsMain extends React.Component {
               jobUrl={card.jobUrl}
               contacts={card.contacts}
               events={card.events}
+              comments={card.comments}
+              changeContactState={this.changeContactState}
             />
           </div>
         ))}
