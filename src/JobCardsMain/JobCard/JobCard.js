@@ -214,7 +214,17 @@ export default class JobCard extends React.Component {
         <div className='edit-icon'>
           <img
             src={require('../../images/plus.png')}
-            onClick={() => this.props.handleAddContactButton(id)}
+            onClick={() => {
+              this.setState({
+                contacts: {
+                  contactName: '',
+                  contactTitle: '',
+                  contactNumber: '',
+                  contactEmail: '',
+                },
+              });
+              return this.props.handleAddContactButton(id);
+            }}
             alt='Add new contact'
           />
         </div>
