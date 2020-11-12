@@ -1,11 +1,22 @@
 header {
   background: grey;
-  margin-left: 150px;
-  margin-top: -10px;
-  height: 75px;
-  padding-top: 10px;
+  height: 125px;
+  position: fixed;
+  width: 105vw;
 }
 
 header h1 {
-  margin-left: 20px;
+  font-size: 1.7em;
+}
+
+@media all and (min-width: 900px) {
+  header {
+    margin-left: 150px;
+    margin-top: -10px;
+    padding-top: 10px;
+  }
+
+  header h1 {
+    margin-left: 20px;
+  }
 }

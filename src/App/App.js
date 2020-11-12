@@ -45,7 +45,7 @@ export default class App extends React.Component {
           <div>
             <Header />
             <SideBar />
-            <main>{this.renderMainRoutes()}</main>
+            <main className='main-view'>{this.renderMainRoutes()}</main>
           </div>
         </ErrorPage>
       </wwContext.Provider>

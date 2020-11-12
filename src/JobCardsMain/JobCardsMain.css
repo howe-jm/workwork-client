@@ -1,18 +1,28 @@
 .CardsDisplay {
   display: flex;
   border: 1px solid black;
-  width: auto;
+  width: 100vw;
   text-align: center;
   flex-flow: row wrap;
-  margin-left: 150px;
+  margin: 0;
 }
 
 .oneCard {
   display: flex;
   flex-flow: column wrap;
   border: 1px solid blue;
-  width: 450px;
+  width: 100vw;
   justify-content: flex-start;
   line-height: 20%;
   margin: 5px;
+  padding-left: 0.3%;
+}
+
+@media all and (min-width: 900px) {
+  .CardsDisplay {
+    width: 100vw;
+  }
+  .oneCard {
+    width: 440px;
+  }
 }

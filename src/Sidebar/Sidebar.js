@@ -13,9 +13,7 @@ export default class Sidebar extends React.Component {
     return userName ? (
       <div>
         <nav className='sidebar'>
-          <div className='logo-box'>
-            Welcome, <p>{userName}</p>
-          </div>
+          <div className='logo-box'>Welcome, {userName}!</div>
           <ul>
             <li>
               <Link to={jobsLink}>Jobs Cards</Link>

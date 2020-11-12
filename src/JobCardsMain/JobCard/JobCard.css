@@ -1,13 +1,16 @@
 .cardTitle {
-  border: 6px solid purple;
-  margin-bottom: -10px;
+  margin: 0 0 35px 0;
+  width: 98vw;
+  border-bottom: 2px solid black;
 }
 
 .card-contacts {
   display: flex;
+  flex-flow: row wrap;
   justify-content: space-evenly;
-  margin: -5px 10px 10px 10px;
+  margin: -5px 0 10px 0;
   border: 2px solid black;
+  width: 98vw;
 }
 .contact {
   border: 3px solid red;
@@ -22,13 +25,14 @@
 .card-events {
   display: flex;
   flex-flow: column wrap;
+  width: 98vw;
   justify-content: space-evenly;
-  margin: -5px 10px 10px 10px;
+  margin: -5px 0 10px 0;
   border: 2px solid black;
 }
 .event {
   border: 3px solid green;
-  width: 45%;
+  width: 80%;
   align-self: center;
   font-size: 0.9em;
 }
@@ -53,7 +57,25 @@
 }
 
 .card-comments-container textarea {
-  width: 80%;
+  width: 80vw;
   height: 100px;
   resize: none;
+}
+
+@media all and (min-width: 900px) {
+  .cardTitle {
+    width: 440px;
+  }
+
+  .card-events {
+    width: 430px;
+  }
+
+  .card-contacts {
+    width: 430px;
+  }
+
+  .card-comments-container textarea {
+    width: 80%;
+  }
 }

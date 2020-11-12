@@ -1,0 +1,13 @@
+body {
+  margin: 0;
+}
+
+.main-view {
+  border: 1px solid black;
+  padding-top: 135px;
+}
+@media all and (min-width: 900px) {
+  .main-view {
+    margin-left: 160px;
+  }
+}
