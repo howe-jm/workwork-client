@@ -27,7 +27,7 @@ export default class JobCardsMain extends React.Component {
     };
     const username = this.state.userName;
 
-    Promise.all([fetch(`${config.API_ENDPOINT}/api/jobs/${username}`, requestOptions)])
+    Promise.all([fetch(`${config.API_ENDPOINT}/jobs/${username}`, requestOptions)])
       .then(([cards]) => {
         if (!cards.ok) return cards.json().then((e) => Promise.reject(e));
         return Promise.all([cards.json()]);
