@@ -3,7 +3,7 @@ import { Route, Link, Switch } from 'react-router-dom';
 import './App.css';
 import wwContext from '../wwContext';
 import ErrorPage from '../ErrorBoundary/ErrorBoundary';
-// To Do:
+import PageNotFound from '../PageNotFound/PageNotFound';
 import Header from '../Header/Header';
 import JobCardsMain from '../JobCardsMain/JobCardsMain';
 import StudyCardsMain from '../StudyCardsMain/StudyCardsMain.js';
@@ -28,7 +28,8 @@ export default class App extends React.Component {
       <Switch>
         <Route exact path='/:userName/jobs' component={JobCardsMain} />
         <Route exact path='/:userName/study' component={StudyCardsMain} />
-        <Route path='/changeuser' component={Login} />
+        <Route exact path='/' component={Login} />
+        <Route component={PageNotFound} />
       </Switch>
     );
   }
