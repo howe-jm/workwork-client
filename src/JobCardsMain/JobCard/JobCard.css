@@ -79,6 +79,11 @@
 .edit-icon {
   width: 15px;
 }
+.save-icon {
+  align-self: flex-end;
+  width: 15px;
+  margin-top: 2px;
+}
 
 .contact-mod-form {
   display: flex;
@@ -89,6 +94,21 @@
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-around;
+}
+
+.edit-form {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  margin-top: -10px;
+}
+
+.contact input {
+  text-align: center;
+  font-size: 0.7em;
+  height: 8px;
+  width: 104px;
+  margin-bottom: 1px;
 }
 
 @media all and (min-width: 900px) {

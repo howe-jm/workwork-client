@@ -12,7 +12,49 @@ export default class JobCard extends React.Component {
     ) : (
       this.props.contacts.map((contact) =>
         contact.editing ? (
-          <div>Editing this contact</div>
+          <div className='contact' key={contact.id}>
+            <h4>Editing this contact</h4>
+            <form className='edit-form'>
+              <input
+                name='contactName'
+                value={contact.contactName}
+                onChange={(e) =>
+                  this.props.handleContactChange(e.target, contact.cardId, contact.id)
+                }
+              />
+              <input
+                name='contactTitle'
+                value={contact.contactTitle}
+                onChange={(e) =>
+                  this.props.handleContactChange(e.target, contact.cardId, contact.id)
+                }
+              />
+              <input
+                name='contactNumber'
+                value={contact.contactNumber}
+                onChange={(e) =>
+                  this.props.handleContactChange(e.target, contact.cardId, contact.id)
+                }
+              />
+              <input
+                name='contactEmail'
+                className='edit-email'
+                value={contact.contactEmail}
+                onChange={(e) =>
+                  this.props.handleContactChange(e.target, contact.cardId, contact.id)
+                }
+              />
+              <div className='save-icon'>
+                <img
+                  src={require('../../images/save.png')}
+                  onClick={() =>
+                    this.props.submitContactState(contact.cardId, contact.id)
+                  }
+                  alt='Save changes'
+                />
+              </div>
+            </form>
+          </div>
         ) : (
           <div className='contact' key={contact.id}>
             <h4>{contact.contactName}</h4>
@@ -45,28 +87,38 @@ export default class JobCard extends React.Component {
     return this.props.events.length === 0 ? (
       <div className='no-events'>No events yet!</div>
     ) : (
-      this.props.events.map((event) => (
-        <div className='event' key={event.id}>
-          <p>
-            {format(event.dateAdded, 'M/DD/YYYY')}: {event.eventType}
-          </p>
-          <div className='event-buttons'>
-            <form className='event-mod-form'>
-              <div className='edit-icon'>
-                <img src={require('../../images/pencil.png')} alt='Edit' />
-              </div>
-              <div className='edit-icon'>
-                <img src={require('../../images/delete.png')} alt='Delete' />
-              </div>
-            </form>
+      this.props.events.map((event) =>
+        event.editing ? (
+          <div className='event' key={event.id}>
+            Editing this event
           </div>
-        </div>
-      ))
+        ) : (
+          <div className='event' key={event.id}>
+            <p>
+              {format(event.dateAdded, 'M/DD/YYYY')}: {event.eventType}
+            </p>
+            <div className='event-buttons'>
+              <form className='event-mod-form'>
+                <div className='edit-icon'>
+                  <img
+                    src={require('../../images/pencil.png')}
+                    onClick={() => this.props.changeEventState(event.cardId, event.id)}
+                    alt='Edit'
+                  />
+                </div>
+                <div className='edit-icon'>
+                  <img src={require('../../images/delete.png')} alt='Delete' />
+                </div>
+              </form>
+            </div>
+          </div>
+        )
+      )
     );
   };
 
   render() {
-    const { companyName, jobTitle, jobUrl } = this.props;
+    const { id, companyName, jobTitle, jobUrl } = this.props;
 
     return (
       <div>
@@ -109,7 +161,10 @@ export default class JobCard extends React.Component {
         </div>
         <div className='card-comments-container'>
           <form>
-            <textarea value={this.props.comments}></textarea>
+            <textarea
+              value={this.props.comments}
+              onChange={(event) => this.props.changeCardComments(id, event.target.value)}
+            ></textarea>
             <p>
               <button>Save</button>
             </p>
