@@ -17,9 +17,13 @@ export default class JobCard extends React.Component {
           <p>{contact.contactnumber}</p>
           <p className='c-email'>{contact.contactemail}</p>
           <div className='cont-buttons'>
-            <form>
-              <button>Edit</button>
-              <button>Delete</button>
+            <form className='contact-mod-form'>
+              <div className='edit-icon'>
+                <img src={require('../../images/pencil.png')} alt='Edit' />
+              </div>
+              <div className='edit-icon'>
+                <img src={require('../../images/delete.png')} alt='Delete' />
+              </div>
             </form>
           </div>
         </div>
@@ -37,9 +41,13 @@ export default class JobCard extends React.Component {
             {format(event.event_added, 'M/DD/YYYY')}: {event.eventtype}
           </p>
           <div className='event-buttons'>
-            <form>
-              <button>Edit</button>
-              <button>Delete</button>
+            <form className='event-mod-form'>
+              <div className='edit-icon'>
+                <img src={require('../../images/pencil.png')} alt='Edit' />
+              </div>
+              <div className='edit-icon'>
+                <img src={require('../../images/delete.png')} alt='Delete' />
+              </div>
             </form>
           </div>
         </div>
@@ -48,6 +56,9 @@ export default class JobCard extends React.Component {
   };
 
   render() {
+    const imageClick = (e) => {
+      console.log(e);
+    };
     const { companyName, jobTitle, jobUrl } = this.props;
 
     return (
@@ -57,17 +68,42 @@ export default class JobCard extends React.Component {
           <h3>{jobTitle}</h3>
           <p>{jobUrl}</p>
         </div>
-        <h2>Contacts</h2>
+        <div className='section-header'>
+          <h2>
+            Contacts
+            <div className='edit-icon'>
+              <img src={require('../../images/down-arrow.png')} alt='Edit' />
+            </div>
+          </h2>
+        </div>
         <div className='card-contacts'>{this.contactsTiles()}</div>
         <div className='newContact'>
           <button>New Contact</button>
         </div>
-        <h2>Events</h2>
+        <div className='section-header'>
+          <h2>
+            Events
+            <div className='edit-icon'>
+              <img src={require('../../images/down-arrow.png')} alt='Edit' />
+            </div>
+          </h2>
+        </div>
         <div className='card-events'>{this.eventsTiles()}</div>
         <div className='newEvent'>
           <button>New Event</button>
         </div>
-        <h2>Comments</h2>
+        <div className='section-header'>
+          <h2>
+            Comments
+            <div className='edit-icon'>
+              <img
+                onClick={(e) => imageClick(e)}
+                src={require('../../images/down-arrow.png')}
+                alt='Edit'
+              />
+            </div>
+          </h2>
+        </div>
         <div className='card-comments-container'>
           <form>
             <textarea></textarea>

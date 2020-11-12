@@ -76,6 +76,21 @@
   resize: none;
 }
 
+.edit-icon {
+  width: 15px;
+}
+
+.contact-mod-form {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+.event-mod-form {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+}
+
 @media all and (min-width: 900px) {
   .cardTitle {
     width: 436px;
