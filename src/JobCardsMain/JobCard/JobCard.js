@@ -8,6 +8,15 @@ import 'react-datepicker/dist/react-datepicker.css';
 export default class JobCard extends React.Component {
   static contextType = wwContext;
 
+  state = {
+    contacts: {
+      contactName: '',
+      contactTitle: '',
+      contactNumber: '',
+      contactEmail: '',
+    },
+  };
+
   contactsTiles = () => {
     return this.props.contacts.length === 0 ? (
       <div className='no-contacts'>No contacts yet!</div>
@@ -120,8 +129,66 @@ export default class JobCard extends React.Component {
     );
   };
 
+  handleContactChange = (name, value) => {
+    let contactsObj = this.state.contacts;
+    contactsObj[name] = value;
+    this.setState({ contacts: contactsObj });
+  };
+
+  newContactForm = () => {
+    return (
+      <div className='new-contact'>
+        <h4>New Contact</h4>
+        <form className='edit-form'>
+          <label htmlFor='contactName'>Name:</label>
+          <input
+            name='contactName'
+            value={this.state.contacts.contactName}
+            onChange={(event) =>
+              this.handleContactChange(event.target.name, event.target.value)
+            }
+          />
+          <label htmlFor='contactTitle'>Title:</label>
+          <input
+            name='contactTitle'
+            value={this.state.contacts.contactTitle}
+            onChange={(event) =>
+              this.handleContactChange(event.target.name, event.target.value)
+            }
+          />
+          <label htmlFor='contactName'>Phone:</label>
+          <input
+            name='contactNumber'
+            value={this.state.contacts.contactNumber}
+            onChange={(event) =>
+              this.handleContactChange(event.target.name, event.target.value)
+            }
+          />
+          <label htmlFor='contactName'>E-Mail:</label>
+          <input
+            name='contactEmail'
+            className='edit-email'
+            value={this.state.contacts.contactEmail}
+            onChange={(event) =>
+              this.handleContactChange(event.target.name, event.target.value)
+            }
+          />
+          <div className='save-icon'>
+            <img
+              src={require('../../images/save.png')}
+              onClick={(e) =>
+                this.props.handleAddNewContact(this.props.id, this.state.contacts)
+              }
+              alt='Save changes'
+            />
+          </div>
+        </form>
+      </div>
+    );
+  };
+
   render() {
-    const { id, companyName, jobTitle, jobUrl } = this.props;
+    const { id, companyName, jobTitle, jobUrl, addingContact } = this.props;
 
     return (
       <div>
@@ -134,14 +201,20 @@ export default class JobCard extends React.Component {
           <h2>
             Contacts
             <div className='edit-icon'>
-              <img src={require('../../images/down-arrow.png')} alt='Edit' />
+              <img src={require('../../images/down-arrow.png')} alt='Add new contact' />
             </div>
           </h2>
         </div>
         <div className='edit-icon'>
-          <img src={require('../../images/plus.png')} alt='Add new contact' />
+          <img
+            src={require('../../images/plus.png')}
+            onClick={() => this.props.handleAddContactButton(id)}
+            alt='Add new contact'
+          />
         </div>
-        <div className='card-contacts'>{this.contactsTiles()}</div>
+        <div className='card-contacts'>
+          {addingContact ? this.newContactForm() : this.contactsTiles()}
+        </div>
         <div className='section-header'>
           <h2>
             Events

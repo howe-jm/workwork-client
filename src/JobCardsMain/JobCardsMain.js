@@ -27,7 +27,7 @@ export default class JobCardsMain extends React.Component {
     };
     const username = this.state.userName;
 
-    Promise.all([fetch(`${config.API_ENDPOINT}/jobs/${username}`, requestOptions)])
+    Promise.all([fetch(`http://localhost:8000/api/jobs/${username}`, requestOptions)])
       .then(([cards]) => {
         if (!cards.ok) return cards.json().then((e) => Promise.reject(e));
         return Promise.all([cards.json()]);
@@ -83,7 +83,8 @@ export default class JobCardsMain extends React.Component {
   handleAddContactButton = (cardId) => {
     let cardToChange = this.state.cardsData.findIndex((cards) => cards.id === cardId);
     let dataState = this.state.cardsData;
-    dataState[cardToChange].newContact = true;
+    dataState[cardToChange].addingContact = true;
+    this.setState({ cardsData: dataState });
   };
 
   changeCardComments = (id, value) => {
@@ -93,7 +94,38 @@ export default class JobCardsMain extends React.Component {
     this.setState({ cardsData: dataState });
   };
 
-  handleAddNewContact = (cardId) => {};
+  handleAddNewContact = (id, values) => {
+    const username = this.state.userName;
+    // Todo: POST contacts API call
+    var myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+
+    var raw = JSON.stringify(values);
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow',
+    };
+
+    fetch(`http://localhost:8000/api/jobs/${username}/contacts/${id}`, requestOptions)
+      .then((res) => {
+        if (!res.ok) return res.json().then((e) => Promise.reject(e));
+        return res.json();
+      })
+      .then((result) => {
+        let cardToChange = this.state.cardsData.findIndex((cards) => cards.id === id);
+        let dataState = this.state.cardsData;
+        console.log(result);
+        dataState[cardToChange].contacts.push(result);
+        dataState[cardToChange].addingContact = false;
+        this.setState({ cardsData: dataState });
+      })
+      .catch((error) => {
+        this.setState({ error: true, errorMsg: `${error}` });
+      });
+  };
 
   render() {
     const { cardsData } = this.state;
@@ -117,8 +149,9 @@ export default class JobCardsMain extends React.Component {
               changeCardComments={this.changeCardComments}
               handleContactChange={this.handleContactChange}
               submitContactState={this.submitContactState}
+              handleAddContactButton={this.handleAddContactButton}
+              handleAddNewContact={this.handleAddNewContact}
               addingContact={card.addingContact}
-              addingEvent={card.addingEvent}
             />
           </div>
         ))}

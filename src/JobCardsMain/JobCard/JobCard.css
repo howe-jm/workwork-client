@@ -22,10 +22,21 @@
   padding: 0 4px 4px 4px;
   border-left: 1px solid black;
   border-right: 1px solid black;
+  min-width: 125px;
+  margin-top: 10px;
 }
 .no-contacts {
   font-size: 1.2rem;
   padding: 20px;
+}
+
+.new-contact {
+  background: rgb(218, 218, 218);
+  line-height: 100%;
+  font-size: 0.9em;
+  padding: 0 4px 4px 4px;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
 }
 
 .card-events {
