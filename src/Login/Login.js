@@ -18,7 +18,13 @@ export default class Login extends React.Component {
       });
     }
     return (
-      <section className='CardsDisplay'>
+      <section className='login-page'>
+        <h2>User Login Page</h2>
+        <p>At the moment, this page simply</p>
+        <p>demonstrates the ability to display</p>
+        <p>data for different users, and is not</p>
+        <p>fully functional as a login or</p>
+        <p>authentication system.</p>
         <label>
           View User
           <div>

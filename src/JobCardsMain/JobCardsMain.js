@@ -2,6 +2,7 @@ import React from 'react';
 import './JobCardsMain.css';
 import JobCard from './JobCard/JobCard';
 import wwContext from '../wwContext';
+import config from '../config';
 
 export default class JobCardsMain extends React.Component {
   state = {
@@ -25,9 +26,7 @@ export default class JobCardsMain extends React.Component {
     const cardType = this.state.cardsDisplayed;
     const username = this.state.userName;
 
-    Promise.all([
-      fetch(`http://localhost:8000/api/${cardType}/${username}`, requestOptions),
-    ])
+    Promise.all([fetch(`${config.API_ENDPOINT}/${cardType}/${username}`, requestOptions)])
       .then(([cards]) => {
         if (!cards.ok) return cards.json().then((e) => Promise.reject(e));
         return Promise.all([cards.json()]);

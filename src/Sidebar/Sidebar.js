@@ -10,10 +10,12 @@ export default class Sidebar extends React.Component {
     const userName = this.context.userName;
     const jobsLink = `/${userName}/jobs`;
     const studyLink = `/${userName}/study`;
-    return (
+    return userName ? (
       <div>
         <nav className='sidebar'>
-          <div className='logo-box'>W</div>
+          <div className='logo-box'>
+            Welcome, <p>{userName}</p>
+          </div>
           <ul>
             <li>
               <Link to={jobsLink}>Jobs Cards</Link>
@@ -22,9 +24,15 @@ export default class Sidebar extends React.Component {
               <Link to={studyLink}>Study Cards</Link>
             </li>
             <li>
-              <Link to='/changeuser'>Change User</Link>
+              <Link to='/'>Change User</Link>
             </li>
           </ul>
+        </nav>
+      </div>
+    ) : (
+      <div>
+        <nav className='sidebar'>
+          <div className='logo-box'>Select a user to continue!</div>
         </nav>
       </div>
     );

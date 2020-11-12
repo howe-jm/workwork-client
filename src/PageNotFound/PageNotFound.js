@@ -10,7 +10,7 @@ export default class PageNotFound extends React.Component {
     return (
       <ErrorPage>
         <div className='not-found'>
-          <h2>Note not found!</h2>
+          <h2>You won't find what you're looking for here...</h2>
           <p>Get outta here, stalker.</p>
         </div>
       </ErrorPage>
