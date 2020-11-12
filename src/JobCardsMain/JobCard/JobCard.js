@@ -69,7 +69,7 @@ export default class JobCard extends React.Component {
         </div>
         <h2>Comments</h2>
         <div className='card-comments-container'>
-          <form className='card-comments-container'>
+          <form>
             <textarea></textarea>
             <p>
               <button>Save</button>
