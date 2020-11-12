@@ -7,7 +7,6 @@ import config from '../config';
 export default class JobCardsMain extends React.Component {
   state = {
     userName: this.props.match.params.userName,
-    cardsDisplayed: 'jobs',
     cardsData: [],
     loading: false,
     error: false,
@@ -22,11 +21,9 @@ export default class JobCardsMain extends React.Component {
     var myHeaders = new Headers();
 
     var requestOptions = { method: 'GET', headers: myHeaders, redirect: 'follow' };
-
-    const cardType = this.state.cardsDisplayed;
     const username = this.state.userName;
 
-    Promise.all([fetch(`${config.API_ENDPOINT}/${cardType}/${username}`, requestOptions)])
+    Promise.all([fetch(`${config.API_ENDPOINT}/jobs/${username}`, requestOptions)])
       .then(([cards]) => {
         if (!cards.ok) return cards.json().then((e) => Promise.reject(e));
         return Promise.all([cards.json()]);
@@ -42,7 +39,11 @@ export default class JobCardsMain extends React.Component {
 
   render() {
     const { cardsData } = this.state;
-    return (
+    return this.state.loading ? (
+      <div>Loading content...</div>
+    ) : this.state.error ? (
+      <div>{this.state.errorMsg}</div>
+    ) : (
       <section className='CardsDisplay'>
         {cardsData.map((card) => (
           <div className='oneCard' key={card.id}>
