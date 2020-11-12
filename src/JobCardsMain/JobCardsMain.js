@@ -94,7 +94,7 @@ export default class JobCardsMain extends React.Component {
     this.setState({ cardsData: dataState });
   };
 
-  handleAddNewContact = (id, values) => {
+  handleAddNewContact = (cardId, values) => {
     const username = this.state.userName;
     // Todo: POST contacts API call
     var myHeaders = new Headers();
@@ -109,13 +109,13 @@ export default class JobCardsMain extends React.Component {
       redirect: 'follow',
     };
 
-    fetch(`${config.API_ENDPOINT}/jobs/${username}/contacts/${id}`, requestOptions)
+    fetch(`${config.API_ENDPOINT}/jobs/${username}/contacts/${cardId}`, requestOptions)
       .then((res) => {
         if (!res.ok) return res.json().then((e) => Promise.reject(e));
         return res.json();
       })
       .then((result) => {
-        let cardToChange = this.state.cardsData.findIndex((cards) => cards.id === id);
+        let cardToChange = this.state.cardsData.findIndex((cards) => cards.id === cardId);
         let dataState = this.state.cardsData;
         console.log(result);
         dataState[cardToChange].contacts.push(result);
@@ -124,6 +124,38 @@ export default class JobCardsMain extends React.Component {
       })
       .catch((error) => {
         this.setState({ error: true, errorMsg: `${error}` });
+      });
+  };
+
+  handleDeleteContact = (cardId, contId) => {
+    console.log(cardId, contId);
+    const username = this.state.userName;
+
+    var requestOptions = {
+      method: 'DELETE',
+      redirect: 'follow',
+    };
+
+    fetch(
+      `${config.API_ENDPOINT}/jobs/${username}/contacts/delete/${contId}`,
+      requestOptions
+    )
+      .then((res) => {
+        if (!res.ok) return res.json().then((e) => Promise.reject(e));
+        return res;
+      })
+      .then(() => {
+        let cardToChange = this.state.cardsData.findIndex((cards) => cards.id === cardId);
+        let dataState = this.state.cardsData;
+
+        dataState[cardToChange].contacts = dataState[cardToChange].contacts.filter(
+          (contact) => contact.id !== contId
+        );
+
+        this.setState({ cardsData: dataState });
+      })
+      .catch((error) => {
+        console.error({ error });
       });
   };
 
@@ -152,6 +184,7 @@ export default class JobCardsMain extends React.Component {
               handleAddContactButton={this.handleAddContactButton}
               handleAddNewContact={this.handleAddNewContact}
               addingContact={card.addingContact}
+              handleDeleteContact={this.handleDeleteContact}
             />
           </div>
         ))}

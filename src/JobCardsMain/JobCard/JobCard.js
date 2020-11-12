@@ -84,7 +84,13 @@ export default class JobCard extends React.Component {
                   />
                 </div>
                 <div className='edit-icon'>
-                  <img src={require('../../images/delete.png')} alt='Delete' />
+                  <img
+                    src={require('../../images/delete.png')}
+                    onClick={() =>
+                      this.props.handleDeleteContact(contact.cardId, contact.id)
+                    }
+                    alt='Delete'
+                  />
                 </div>
               </form>
             </div>
