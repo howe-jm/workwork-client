@@ -56,9 +56,6 @@ export default class JobCard extends React.Component {
   };
 
   render() {
-    const imageClick = (e) => {
-      console.log(e);
-    };
     const { companyName, jobTitle, jobUrl } = this.props;
 
     return (
@@ -96,11 +93,7 @@ export default class JobCard extends React.Component {
           <h2>
             Comments
             <div className='edit-icon'>
-              <img
-                onClick={(e) => imageClick(e)}
-                src={require('../../images/down-arrow.png')}
-                alt='Edit'
-              />
+              <img src={require('../../images/down-arrow.png')} alt='Edit' />
             </div>
           </h2>
         </div>

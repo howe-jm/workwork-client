@@ -17,6 +17,7 @@ export default class Login extends React.Component {
         );
       });
     }
+    this.context.userName = userArray[0];
     return (
       <section className='login-page'>
         <h2>User Login Page</h2>
@@ -33,6 +34,9 @@ export default class Login extends React.Component {
               name='currentUser'
               onChange={(e) => this.context.setUserName(e.target.value)}
             >
+              <option key='-1' value=''>
+                Select One
+              </option>
               {options}
             </select>
           </div>

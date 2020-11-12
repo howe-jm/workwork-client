@@ -20,7 +20,6 @@ export default class App extends React.Component {
 
   setUserName = (userName) => {
     this.setState({ userName });
-    console.log(this.state.userName);
   };
 
   renderMainRoutes() {
