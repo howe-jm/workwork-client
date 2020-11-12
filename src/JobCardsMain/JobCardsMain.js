@@ -33,10 +33,15 @@ export default class JobCardsMain extends React.Component {
         return Promise.all([cards.json()]);
       })
       .then(([cardsData]) => {
-        cardsData.map((card) =>
-          card.contacts.map((contact) => (contact.editing = false))
-        );
-        cardsData.map((card) => card.events.map((event) => (event.editing = false)));
+        cardsData.map((card) => {
+          card.contacts.map((contact) => (contact.editing = false));
+          card.events.map((event) => (event.editing = false));
+          card.addingContact = false;
+          card.addingEvent = false;
+          card.editHeader = false;
+          return null;
+        });
+        console.log(cardsData);
         this.setState({ cardsData });
       })
       .then(() => this.setState({ loading: false }))
@@ -81,22 +86,14 @@ export default class JobCardsMain extends React.Component {
     dataState[cardToChange].newContact = true;
   };
 
-  changeEventState = (card, id) => {
-    let cardToChange = this.state.cardsData.findIndex((cards) => cards.id === card);
-    let eventToChange = this.state.cardsData[cardToChange].events.findIndex(
-      (event) => event.id === id
-    );
-    let dataState = this.state.cardsData;
-    dataState[cardToChange].events[eventToChange].editing = true;
-    this.setState({ cardsData: dataState });
-  };
-
   changeCardComments = (id, value) => {
     let dataState = this.state.cardsData;
     let cardToChange = this.state.cardsData.findIndex((cards) => cards.id === id);
     dataState[cardToChange].comments = value;
     this.setState({ cardsData: dataState });
   };
+
+  handleAddNewContact = (cardId) => {};
 
   render() {
     const { cardsData } = this.state;
@@ -117,10 +114,11 @@ export default class JobCardsMain extends React.Component {
               events={card.events}
               comments={card.comments}
               changeContactState={this.changeContactState}
-              changeEventState={this.changeEventState}
               changeCardComments={this.changeCardComments}
               handleContactChange={this.handleContactChange}
               submitContactState={this.submitContactState}
+              addingContact={card.addingContact}
+              addingEvent={card.addingEvent}
             />
           </div>
         ))}

@@ -1,7 +1,9 @@
 import React from 'react';
-import './JobCard.css';
 import { format } from 'date-fns';
 import wwContext from '../../wwContext';
+
+import './JobCard.css';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export default class JobCard extends React.Component {
   static contextType = wwContext;
@@ -100,13 +102,6 @@ export default class JobCard extends React.Component {
             <div className='event-buttons'>
               <form className='event-mod-form'>
                 <div className='edit-icon'>
-                  <img
-                    src={require('../../images/pencil.png')}
-                    onClick={() => this.props.changeEventState(event.cardId, event.id)}
-                    alt='Edit'
-                  />
-                </div>
-                <div className='edit-icon'>
                   <img src={require('../../images/delete.png')} alt='Delete' />
                 </div>
               </form>
@@ -114,6 +109,14 @@ export default class JobCard extends React.Component {
           </div>
         )
       )
+    );
+  };
+
+  eventSubmitForm = () => {
+    return (
+      <div>
+        Event: <input value='' />
+      </div>
     );
   };
 
