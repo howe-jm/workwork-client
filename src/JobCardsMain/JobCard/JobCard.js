@@ -12,10 +12,10 @@ export default class JobCard extends React.Component {
     ) : (
       this.props.contacts.map((contact) => (
         <div className='contact' key={contact.id}>
-          <h4>{contact.contactname}</h4>
-          <p>{contact.contacttitle}</p>
-          <p>{contact.contactnumber}</p>
-          <p className='c-email'>{contact.contactemail}</p>
+          <h4>{contact.contactName}</h4>
+          <p>{contact.contactTitle}</p>
+          <p>{contact.contactNumber}</p>
+          <p className='c-email'>{contact.contactEmail}</p>
           <div className='cont-buttons'>
             <form className='contact-mod-form'>
               <div className='edit-icon'>
@@ -38,7 +38,7 @@ export default class JobCard extends React.Component {
       this.props.events.map((event) => (
         <div className='event' key={event.id}>
           <p>
-            {format(event.event_added, 'M/DD/YYYY')}: {event.eventtype}
+            {format(event.dateAdded, 'M/DD/YYYY')}: {event.eventType}
           </p>
           <div className='event-buttons'>
             <form className='event-mod-form'>
@@ -73,10 +73,10 @@ export default class JobCard extends React.Component {
             </div>
           </h2>
         </div>
-        <div className='card-contacts'>{this.contactsTiles()}</div>
-        <div className='newContact'>
-          <button>New Contact</button>
+        <div className='edit-icon'>
+          <img src={require('../../images/plus.png')} alt='Add new contact' />
         </div>
+        <div className='card-contacts'>{this.contactsTiles()}</div>
         <div className='section-header'>
           <h2>
             Events
@@ -85,10 +85,10 @@ export default class JobCard extends React.Component {
             </div>
           </h2>
         </div>
-        <div className='card-events'>{this.eventsTiles()}</div>
-        <div className='newEvent'>
-          <button>New Event</button>
+        <div className='edit-icon'>
+          <img src={require('../../images/plus.png')} alt='Add new contact' />
         </div>
+        <div className='card-events'>{this.eventsTiles()}</div>
         <div className='section-header'>
           <h2>
             Comments
