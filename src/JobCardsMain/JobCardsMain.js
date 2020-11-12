@@ -27,7 +27,7 @@ export default class JobCardsMain extends React.Component {
     };
     const username = this.state.userName;
 
-    Promise.all([fetch(`http://localhost:8000/api/jobs/${username}`, requestOptions)])
+    Promise.all([fetch(`${config.API_ENDPOINT}/api/jobs/${username}`, requestOptions)])
       .then(([cards]) => {
         if (!cards.ok) return cards.json().then((e) => Promise.reject(e));
         return Promise.all([cards.json()]);
@@ -107,7 +107,7 @@ export default class JobCardsMain extends React.Component {
       redirect: 'follow',
     };
 
-    fetch(`http://localhost:8000/api/jobs/${username}/contacts/${cardId}`, requestOptions)
+    fetch(`${config.API_ENDPOINT}/jobs/${username}/contacts/${cardId}`, requestOptions)
       .then((res) => {
         if (!res.ok) return res.json().then((e) => Promise.reject(e));
         return res.json();
@@ -133,7 +133,7 @@ export default class JobCardsMain extends React.Component {
     };
 
     fetch(
-      `http://localhost:8000/api/jobs/${username}/contacts/delete/${contId}`,
+      `${config.API_ENDPOINT}/jobs/${username}/contacts/delete/${contId}`,
       requestOptions
     )
       .then((res) => {
