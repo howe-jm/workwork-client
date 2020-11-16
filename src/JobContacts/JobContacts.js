@@ -5,7 +5,9 @@ export default class ContactsTiles extends React.Component {
   static contextType = JobsContext;
 
   render() {
-    return this.props.contacts.length === 0 ? (
+    return this.context.JobCardState.contactsCollapsed ? (
+      <div></div>
+    ) : this.props.contacts.length === 0 ? (
       <div className='no-contacts'>No contacts yet!</div>
     ) : (
       this.props.contacts.map((contact) =>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { format } from 'date-fns';
 import JobsContext from '../JobsContext';
-import Contacts from '../Contacts/Contacts';
+import JobContacts from '../JobContacts/JobContacts';
 import NewContact from '../NewContact/NewContact';
 
 import './JobCard.css';
@@ -19,6 +19,9 @@ export default class JobCard extends React.Component {
       newContactError: false,
       errorMsg: '',
     },
+    contactsCollapsed: false,
+    eventsCollapsed: false,
+    commentsCollasped: false,
   };
 
   eventsTiles = () => {
@@ -54,14 +57,6 @@ export default class JobCard extends React.Component {
     this.setState({ contacts: contactsObj });
   };
 
-  eventSubmitForm = () => {
-    return (
-      <div>
-        Event: <input value='' />
-      </div>
-    );
-  };
-
   addContactButtonListner = (id) => {
     this.setState({
       contacts: {
@@ -74,6 +69,11 @@ export default class JobCard extends React.Component {
       },
     });
     return this.context.cardsFunctions.handleAddContactButton(id);
+  };
+
+  handleCollapseContacts = () => {
+    console.log('Clicked!');
+    this.setState({ contactsCollapsed: !this.state.contactsCollapsed });
   };
 
   render() {
@@ -96,7 +96,11 @@ export default class JobCard extends React.Component {
             <h2>
               Contacts
               <div className='edit-icon'>
-                <img src={require('../images/down-arrow.png')} alt='Add new contact' />
+                <img
+                  src={require('../images/down-arrow.png')}
+                  onClick={() => this.handleCollapseContacts()}
+                  alt='Add new contact'
+                />
               </div>
             </h2>
           </div>
@@ -111,7 +115,7 @@ export default class JobCard extends React.Component {
             {addingContact ? (
               <NewContact cardId={this.props.card.id} />
             ) : (
-              <Contacts contacts={this.props.card.contacts} />
+              <JobContacts contacts={this.props.card.contacts} />
             )}
           </div>
           <div className='section-header'>
