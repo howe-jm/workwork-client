@@ -5,6 +5,8 @@ export default class NewContact extends React.Component {
   static contextType = JobsContext;
 
   render() {
+    const { cardsFunctions } = this.context;
+    console.log(this.context);
     return (
       <div className='new-contact'>
         <h4>New Contact</h4>
@@ -12,41 +14,44 @@ export default class NewContact extends React.Component {
           <label htmlFor='contactName'>Name:</label>
           <input
             name='contactName'
-            value={this.state.contacts.contactName}
+            value={this.context.JobCardState.contactName}
             onChange={(event) =>
-              this.props.handleContactChange(event.target.name, event.target.value)
+              this.context.handleContactChange(event.target.name, event.target.value)
             }
           />
           <label htmlFor='contactTitle'>Title:</label>
           <input
             name='contactTitle'
-            value={this.state.contacts.contactTitle}
+            value={this.context.JobCardState.contactTitle}
             onChange={(event) =>
-              this.props.handleContactChange(event.target.name, event.target.value)
+              this.context.handleContactChange(event.target.name, event.target.value)
             }
           />
           <label htmlFor='contactName'>Phone:</label>
           <input
             name='contactNumber'
-            value={this.state.contacts.contactNumber}
+            value={this.context.JobCardState.contactNumber}
             onChange={(event) =>
-              this.props.handleContactChange(event.target.name, event.target.value)
+              this.context.handleContactChange(event.target.name, event.target.value)
             }
           />
           <label htmlFor='contactName'>E-Mail:</label>
           <input
             name='contactEmail'
             className='edit-email'
-            value={this.state.contacts.contactEmail}
+            value={this.context.JobCardState.contactEmail}
             onChange={(event) =>
-              this.props.handleContactChange(event.target.name, event.target.value)
+              this.context.handleContactChange(event.target.name, event.target.value)
             }
           />
           <div className='save-icon'>
             <img
               src={require('../images/save.png')}
               onClick={(e) =>
-                this.context.handleAddNewContact(this.props.id, this.props.contacts)
+                cardsFunctions.handleAddNewContact(
+                  this.props.cardId,
+                  this.context.JobCardState.contacts
+                )
               }
               alt='Save changes'
             />

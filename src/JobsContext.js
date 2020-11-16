@@ -10,4 +10,6 @@ export default React.createContext({
     handleAddNewContact: () => {},
     handleDeleteContact: () => {},
   },
+  handleContactChange: () => {},
+  JobCardState: {},
 });
