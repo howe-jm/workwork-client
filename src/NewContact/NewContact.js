@@ -1,12 +1,20 @@
 import React from 'react';
 import JobsContext from '../JobsContext';
+import './NewContact.css';
 
 export default class NewContact extends React.Component {
   static contextType = JobsContext;
 
+  verifyContactFields = (cardId, contactObj) => {
+    const { contactName, contactTitle, contactNumber, contactEmail } = contactObj;
+    return !contactName || !contactTitle || (!contactNumber && !contactEmail)
+      ? this.setState({ contactObj: { newContactError: true } })
+      : this.context.cardsFunctions.handleAddNewContact(cardId);
+  };
+
   render() {
-    const { cardsFunctions } = this.context;
-    console.log(this.context);
+    const { handleContactChange, JobCardState, cardsFunctions } = this.context;
+    const { cardId } = this.props;
     return (
       <div className='new-contact'>
         <h4>New Contact</h4>
@@ -16,7 +24,7 @@ export default class NewContact extends React.Component {
             name='contactName'
             value={this.context.JobCardState.contactName}
             onChange={(event) =>
-              this.context.handleContactChange(event.target.name, event.target.value)
+              handleContactChange(event.target.name, event.target.value)
             }
           />
           <label htmlFor='contactTitle'>Title:</label>
@@ -24,7 +32,7 @@ export default class NewContact extends React.Component {
             name='contactTitle'
             value={this.context.JobCardState.contactTitle}
             onChange={(event) =>
-              this.context.handleContactChange(event.target.name, event.target.value)
+              handleContactChange(event.target.name, event.target.value)
             }
           />
           <label htmlFor='contactName'>Phone:</label>
@@ -32,7 +40,7 @@ export default class NewContact extends React.Component {
             name='contactNumber'
             value={this.context.JobCardState.contactNumber}
             onChange={(event) =>
-              this.context.handleContactChange(event.target.name, event.target.value)
+              handleContactChange(event.target.name, event.target.value)
             }
           />
           <label htmlFor='contactName'>E-Mail:</label>
@@ -41,20 +49,26 @@ export default class NewContact extends React.Component {
             className='edit-email'
             value={this.context.JobCardState.contactEmail}
             onChange={(event) =>
-              this.context.handleContactChange(event.target.name, event.target.value)
+              handleContactChange(event.target.name, event.target.value)
             }
           />
-          <div className='save-icon'>
-            <img
-              src={require('../images/save.png')}
-              onClick={(e) =>
-                cardsFunctions.handleAddNewContact(
-                  this.props.cardId,
-                  this.context.JobCardState.contacts
-                )
-              }
-              alt='Save changes'
-            />
+          <div className='buttons-container'>
+            <div className='save-icon'>
+              <img
+                src={require('../images/cancel.png')}
+                onClick={() => cardsFunctions.handleAddContactButton(cardId)}
+                alt='Cancel'
+              />
+            </div>
+            <div className='save-icon'>
+              <img
+                src={require('../images/save.png')}
+                onClick={(e) =>
+                  this.verifyContactFields(this.props.cardId, JobCardState.contacts)
+                }
+                alt='Save changes'
+              />
+            </div>
           </div>
         </form>
       </div>

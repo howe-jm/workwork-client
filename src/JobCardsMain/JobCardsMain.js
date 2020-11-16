@@ -91,7 +91,7 @@ export default class JobCardsMain extends React.Component {
     handleAddContactButton: (card) => {
       let currentCard = this.cardToChange(card);
       let dataState = this.state.cardsData;
-      dataState[currentCard].addingContact = true;
+      dataState[currentCard].addingContact = !dataState[currentCard].addingContact;
       this.setState({ cardsData: dataState });
     },
 

@@ -16,6 +16,8 @@ export default class JobCard extends React.Component {
       contactTitle: '',
       contactNumber: '',
       contactEmail: '',
+      newContactError: false,
+      errorMsg: '',
     },
   };
 
@@ -46,62 +48,6 @@ export default class JobCard extends React.Component {
     );
   };
 
-  newContactForm = () => {
-    const { cardsFunctions } = this.context;
-    return (
-      <div className='new-contact'>
-        <h4>New Contact</h4>
-        <form className='edit-form'>
-          <label htmlFor='contactName'>Name:</label>
-          <input
-            name='contactName'
-            value={this.state.contacts.contactName}
-            onChange={(event) =>
-              cardsFunctions.handleContactChange(event.target.name, event.target.value)
-            }
-          />
-          <label htmlFor='contactTitle'>Title:</label>
-          <input
-            name='contactTitle'
-            value={this.state.contacts.contactTitle}
-            onChange={(event) =>
-              cardsFunctions.handleContactChange(event.target.name, event.target.value)
-            }
-          />
-          <label htmlFor='contactName'>Phone:</label>
-          <input
-            name='contactNumber'
-            value={this.state.contacts.contactNumber}
-            onChange={(event) =>
-              cardsFunctions.handleContactChange(event.target.name, event.target.value)
-            }
-          />
-          <label htmlFor='contactName'>E-Mail:</label>
-          <input
-            name='contactEmail'
-            className='edit-email'
-            value={this.state.contacts.contactEmail}
-            onChange={(event) =>
-              cardsFunctions.handleContactChange(event.target.name, event.target.value)
-            }
-          />
-          <div className='save-icon'>
-            <img
-              src={require('../images/save.png')}
-              onClick={(e) =>
-                cardsFunctions.handleAddNewContact(
-                  this.props.card.id,
-                  this.state.contacts
-                )
-              }
-              alt='Save changes'
-            />
-          </div>
-        </form>
-      </div>
-    );
-  };
-
   handleContactChange = (name, value) => {
     let contactsObj = this.state.contacts;
     contactsObj[name] = value;
@@ -114,6 +60,20 @@ export default class JobCard extends React.Component {
         Event: <input value='' />
       </div>
     );
+  };
+
+  addContactButtonListner = (id) => {
+    this.setState({
+      contacts: {
+        contactName: '',
+        contactTitle: '',
+        contactNumber: '',
+        contactEmail: '',
+        newContactError: false,
+        errorMsg: '',
+      },
+    });
+    return this.context.cardsFunctions.handleAddContactButton(id);
   };
 
   render() {
@@ -143,17 +103,7 @@ export default class JobCard extends React.Component {
           <div className='edit-icon'>
             <img
               src={require('../images/plus.png')}
-              onClick={() => {
-                this.setState({
-                  contacts: {
-                    contactName: '',
-                    contactTitle: '',
-                    contactNumber: '',
-                    contactEmail: '',
-                  },
-                });
-                return cardsFunctions.handleAddContactButton(id);
-              }}
+              onClick={() => this.addContactButtonListner(id)}
               alt='Add new contact'
             />
           </div>
