@@ -20,10 +20,11 @@ export default class NewJobEvent extends React.Component {
         <h4>New Event</h4>
         <form className='edit-form'>
           <p>Date: {format(new Date(), 'M/DD/YYYY')}</p>
-          <label htmlFor='contactName'>Name:</label>
+          <label htmlFor='contactName'>Name: </label>
           <p>
             <input
               name='eventType'
+              placeholder='Resume Sent, Callback, etc.'
               value={this.context.JobCardState.eventType}
               onChange={(event) =>
                 handleEventChange(event.target.name, event.target.value)

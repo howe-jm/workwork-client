@@ -6,7 +6,6 @@ export default class JobEvents extends React.Component {
   static contextType = JobsContext;
 
   render() {
-    console.log(this.props.events);
     return this.context.JobCardState.eventsCollapsed ? (
       <div></div>
     ) : this.props.events.length === 0 ? (
