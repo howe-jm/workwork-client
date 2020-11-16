@@ -1,6 +1,6 @@
 import React from 'react';
 import JobsContext from '../JobsContext';
-import './NewContact.css';
+import './NewJobContact.css';
 
 export default class NewContact extends React.Component {
   static contextType = JobsContext;

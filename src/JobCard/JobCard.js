@@ -1,8 +1,9 @@
 import React from 'react';
-import { format } from 'date-fns';
 import JobsContext from '../JobsContext';
 import JobContacts from '../JobContacts/JobContacts';
-import NewContact from '../NewContact/NewContact';
+import NewJobContact from '../NewJobContact/NewJobContact';
+import JobEvents from '../JobEvents/JobEvents';
+import NewJobEvent from '../NewJobEvent/NewJobEvent';
 
 import './JobCard.css';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -22,33 +23,6 @@ export default class JobCard extends React.Component {
     contactsCollapsed: false,
     eventsCollapsed: false,
     commentsCollasped: false,
-  };
-
-  eventsTiles = () => {
-    return this.props.card.events.length === 0 ? (
-      <div className='no-events'>No events yet!</div>
-    ) : (
-      this.props.card.events.map((event) =>
-        event.editing ? (
-          <div className='event' key={event.id}>
-            Editing this event
-          </div>
-        ) : (
-          <div className='event' key={event.id}>
-            <p>
-              {format(event.dateAdded, 'M/DD/YYYY')}: {event.eventType}
-            </p>
-            <div className='event-buttons'>
-              <form className='event-mod-form'>
-                <div className='edit-icon'>
-                  <img src={require('../images/delete.png')} alt='Delete' />
-                </div>
-              </form>
-            </div>
-          </div>
-        )
-      )
-    );
   };
 
   handleContactChange = (name, value) => {
@@ -72,12 +46,24 @@ export default class JobCard extends React.Component {
   };
 
   handleCollapseContacts = () => {
-    console.log('Clicked!');
     this.setState({ contactsCollapsed: !this.state.contactsCollapsed });
+  };
+  handleCollapseEvents = () => {
+    this.setState({ eventsCollapsed: !this.state.eventsCollapsed });
+  };
+  handleCollapseComments = () => {
+    this.setState({ commentsCollapsed: !this.state.commentsCollapsed });
   };
 
   render() {
-    const { id, companyName, jobTitle, jobUrl, addingContact } = this.props.card;
+    const {
+      id,
+      companyName,
+      jobTitle,
+      jobUrl,
+      addingContact,
+      addingEvent,
+    } = this.props.card;
     const { cardsFunctions } = this.context;
     const value = {
       cardsFunctions: this.context.cardsFunctions,
@@ -113,7 +99,7 @@ export default class JobCard extends React.Component {
           </div>
           <div className='card-contacts'>
             {addingContact ? (
-              <NewContact cardId={this.props.card.id} />
+              <NewJobContact cardId={this.props.card.id} />
             ) : (
               <JobContacts contacts={this.props.card.contacts} />
             )}
@@ -129,7 +115,13 @@ export default class JobCard extends React.Component {
           <div className='edit-icon'>
             <img src={require('../images/plus.png')} alt='Add new contact' />
           </div>
-          <div className='card-events'>{this.eventsTiles()}</div>
+          <div className='card-events'>
+            {addingEvent ? (
+              <NewJobEvent cardId={this.props.card.id} />
+            ) : (
+              <JobEvents events={this.props.card.events} />
+            )}
+          </div>
           <div className='section-header'>
             <h2>
               Comments
