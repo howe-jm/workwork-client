@@ -77,7 +77,11 @@ export default class JobCardsMain extends React.Component {
       dataState[currentCard].contacts[currentContact].editing = !dataState[currentCard]
         .contacts[currentContact].editing;
       this.setState({ cardsData: dataState });
-      // Todo: PATCH api call.
+      // Todo: PATCH api call. (Contacts)
+    },
+
+    submitCommentsState: (card) => {
+      // Todo: PATCH api call. (Comments)
     },
 
     handleContactChange: (value, card, contactId) => {
@@ -92,6 +96,13 @@ export default class JobCardsMain extends React.Component {
       let currentCard = this.cardToChange(card);
       let dataState = this.state.cardsData;
       dataState[currentCard].addingContact = !dataState[currentCard].addingContact;
+      this.setState({ cardsData: dataState });
+    },
+
+    handleAddEventButton: (card) => {
+      let currentCard = this.cardToChange(card);
+      let dataState = this.state.cardsData;
+      dataState[currentCard].addingEvent = !dataState[currentCard].addingEvent;
       this.setState({ cardsData: dataState });
     },
 
@@ -155,6 +166,69 @@ export default class JobCardsMain extends React.Component {
 
           dataState[currentCard].contacts = dataState[currentCard].contacts.filter(
             (contact) => contact.id !== contId
+          );
+
+          this.setState({ cardsData: dataState });
+        })
+        .catch((error) => {
+          console.error({ error });
+        });
+    },
+
+    handleAddNewEvent: (card, values) => {
+      const username = this.state.userName;
+      var myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json');
+
+      var raw = JSON.stringify(values);
+
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow',
+      };
+
+      fetch(`${config.API_ENDPOINT}/jobs/${username}/events/${card}`, requestOptions)
+        .then((res) => {
+          if (!res.ok) return res.json().then((e) => Promise.reject(e));
+          return res.json();
+        })
+        .then((result) => {
+          let currentCard = this.cardToChange(card);
+          let dataState = this.state.cardsData;
+          result.dateAdded = `${new Date().toISOString()}`;
+          dataState[currentCard].events.push(result);
+          dataState[currentCard].addingEvent = false;
+          this.setState({ cardsData: dataState });
+        })
+        .catch((error) => {
+          this.setState({ error: true, errorMsg: `${error}` });
+        });
+    },
+
+    handleDeleteEvent: (card, eventId) => {
+      const username = this.state.userName;
+
+      var requestOptions = {
+        method: 'DELETE',
+        redirect: 'follow',
+      };
+
+      fetch(
+        `${config.API_ENDPOINT}/jobs/${username}/events/delete/${eventId}`,
+        requestOptions
+      )
+        .then((res) => {
+          if (!res.ok) return res.json().then((e) => Promise.reject(e));
+          return res;
+        })
+        .then(() => {
+          let currentCard = this.cardToChange(card);
+          let dataState = this.state.cardsData;
+
+          dataState[currentCard].events = dataState[currentCard].events.filter(
+            (event) => event.id !== eventId
           );
 
           this.setState({ cardsData: dataState });

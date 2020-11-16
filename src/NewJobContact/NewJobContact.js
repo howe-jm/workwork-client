@@ -9,7 +9,7 @@ export default class NewContact extends React.Component {
     const { contactName, contactTitle, contactNumber, contactEmail } = contactObj;
     return !contactName || !contactTitle || (!contactNumber && !contactEmail)
       ? this.setState({ contactObj: { newContactError: true } })
-      : this.context.cardsFunctions.handleAddNewContact(cardId);
+      : this.context.cardsFunctions.handleAddNewContact(cardId, contactObj);
   };
 
   render() {

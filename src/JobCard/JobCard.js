@@ -20,9 +20,15 @@ export default class JobCard extends React.Component {
       newContactError: false,
       errorMsg: '',
     },
+    events: {
+      eventType: '',
+      dateAdded: '',
+      newEventError: false,
+    },
+    cardCollapsed: true,
     contactsCollapsed: false,
     eventsCollapsed: false,
-    commentsCollasped: false,
+    commentsCollasped: true,
   };
 
   handleContactChange = (name, value) => {
@@ -31,7 +37,13 @@ export default class JobCard extends React.Component {
     this.setState({ contacts: contactsObj });
   };
 
-  addContactButtonListner = (id) => {
+  handleEventChange = (name, value) => {
+    let eventsObj = this.state.events;
+    eventsObj[name] = value;
+    this.setState({ events: eventsObj });
+  };
+
+  clearState = () => {
     this.setState({
       contacts: {
         contactName: '',
@@ -42,7 +54,16 @@ export default class JobCard extends React.Component {
         errorMsg: '',
       },
     });
+  };
+
+  addContactButtonListner = (id) => {
+    this.clearState();
     return this.context.cardsFunctions.handleAddContactButton(id);
+  };
+
+  addEventButtonListner = (id) => {
+    this.clearState();
+    return this.context.cardsFunctions.handleAddEventButton(id);
   };
 
   handleCollapseContacts = () => {
@@ -53,6 +74,9 @@ export default class JobCard extends React.Component {
   };
   handleCollapseComments = () => {
     this.setState({ commentsCollapsed: !this.state.commentsCollapsed });
+  };
+  handleCollapseCard = () => {
+    this.setState({ cardCollapsed: !this.state.cardCollapsed });
   };
 
   render() {
@@ -68,6 +92,7 @@ export default class JobCard extends React.Component {
     const value = {
       cardsFunctions: this.context.cardsFunctions,
       handleContactChange: this.handleContactChange,
+      handleEventChange: this.handleEventChange,
       JobCardState: this.state,
     };
     return (
@@ -77,78 +102,99 @@ export default class JobCard extends React.Component {
             <h2>{companyName}</h2>
             <h3>{jobTitle}</h3>
             <p>{jobUrl}</p>
+            <div className='edit-icon'>
+              <img
+                src={require('../images/down-arrow.png')}
+                onClick={() => this.handleCollapseCard()}
+                alt='Collapse Contacts'
+              />
+            </div>
           </div>
-          <div className='section-header'>
-            <h2>
-              Contacts
+          {this.state.cardCollapsed ? null : (
+            <div>
+              <div className='section-header'>
+                <h2>
+                  Contacts
+                  <div className='edit-icon'>
+                    <img
+                      src={require('../images/down-arrow.png')}
+                      onClick={() => this.handleCollapseContacts()}
+                      alt='Collapse Contacts'
+                    />
+                  </div>
+                </h2>
+              </div>
               <div className='edit-icon'>
                 <img
-                  src={require('../images/down-arrow.png')}
-                  onClick={() => this.handleCollapseContacts()}
+                  src={require('../images/plus.png')}
+                  onClick={() => this.addContactButtonListner(id)}
                   alt='Add new contact'
                 />
               </div>
-            </h2>
-          </div>
-          <div className='edit-icon'>
-            <img
-              src={require('../images/plus.png')}
-              onClick={() => this.addContactButtonListner(id)}
-              alt='Add new contact'
-            />
-          </div>
-          <div className='card-contacts'>
-            {addingContact ? (
-              <NewJobContact cardId={this.props.card.id} />
-            ) : (
-              <JobContacts contacts={this.props.card.contacts} />
-            )}
-          </div>
-          <div className='section-header'>
-            <h2>
-              Events
-              <div className='edit-icon'>
-                <img src={require('../images/down-arrow.png')} alt='Edit' />
+              <div className='card-contacts'>
+                {addingContact ? (
+                  <NewJobContact cardId={this.props.card.id} />
+                ) : (
+                  <JobContacts contacts={this.props.card.contacts} />
+                )}
               </div>
-            </h2>
-          </div>
-          <div className='edit-icon'>
-            <img src={require('../images/plus.png')} alt='Add new contact' />
-          </div>
-          <div className='card-events'>
-            {addingEvent ? (
-              <NewJobEvent cardId={this.props.card.id} />
-            ) : (
-              <JobEvents events={this.props.card.events} />
-            )}
-          </div>
-          <div className='section-header'>
-            <h2>
-              Comments
-              <div className='edit-icon'>
-                <img src={require('../images/down-arrow.png')} alt='Edit' />
+              <div className='section-header'>
+                <h2>
+                  Events
+                  <div className='edit-icon'>
+                    <img
+                      src={require('../images/down-arrow.png')}
+                      onClick={() => this.handleCollapseEvents()}
+                      alt='Collapse Events'
+                    />
+                  </div>
+                </h2>
               </div>
-            </h2>
-          </div>
-          <div className='card-comments-container'>
-            <form>
-              <textarea
-                value={this.props.card.comments}
-                onChange={(event) =>
-                  cardsFunctions.changeCardComments(id, event.target.value)
-                }
-              ></textarea>
-              <p>
-                <button>Save</button>
-              </p>
-            </form>
-          </div>
-          <div className='card-buttons'>
-            <form>
-              <button>Edit</button>
-              <button>Delete</button>
-            </form>
-          </div>
+              <div className='edit-icon'>
+                <img
+                  src={require('../images/plus.png')}
+                  onClick={() => this.addEventButtonListner(id)}
+                  alt='Add new contact'
+                />
+              </div>
+              <div className='card-events'>
+                {addingEvent ? (
+                  <NewJobEvent cardId={this.props.card.id} />
+                ) : (
+                  <JobEvents events={this.props.card.events} />
+                )}
+              </div>
+              <div className='section-header'>
+                <h2>
+                  Comments
+                  <div className='edit-icon'>
+                    <img
+                      src={require('../images/down-arrow.png')}
+                      onClick={() => this.handleCollapseComments()}
+                      alt='Collapse Comments'
+                    />
+                  </div>
+                </h2>
+              </div>
+              <div className='card-comments-container'>
+                {this.state.commentsCollapsed ? (
+                  <div></div>
+                ) : (
+                  <form>
+                    <textarea
+                      value={this.props.card.comments}
+                      onChange={(event) =>
+                        cardsFunctions.changeCardComments(id, event.target.value)
+                      }
+                    ></textarea>
+                    <p>
+                      <button>Save</button>
+                    </p>
+                  </form>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </JobsContext.Provider>
     );
