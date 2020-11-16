@@ -49,55 +49,60 @@ export default class JobCardsMain extends React.Component {
         this.setState({ error: true, errorMsg: `${error}` });
       });
   }
+
+  cardToChange = (card) => {
+    return this.state.cardsData.findIndex((cards) => cards.id === card);
+  };
+
+  contactToChange = (currentCard, contactId) => {
+    return this.state.cardsData[currentCard].contacts.findIndex(
+      (contact) => contact.id === contactId
+    );
+  };
+
   cardsFunctions = {
-    changeContactState: (card, id) => {
-      let cardToChange = this.state.cardsData.findIndex((cards) => cards.id === card);
-      let contToChange = this.state.cardsData[cardToChange].contacts.findIndex(
-        (contact) => contact.id === id
-      );
+    changeContactEditState: (card, contactId) => {
+      let currentCard = this.cardToChange(card);
+      let currentContact = this.contactToChange(currentCard, contactId);
       let dataState = this.state.cardsData;
-      dataState[cardToChange].contacts[contToChange].editing = !dataState[cardToChange]
-        .contacts[contToChange].editing;
+      dataState[currentCard].contacts[currentContact].editing = !dataState[currentCard]
+        .contacts[currentContact].editing;
       this.setState({ cardsData: dataState });
     },
 
-    submitContactState: (card, id) => {
-      let cardToChange = this.state.cardsData.findIndex((cards) => cards.id === card);
-      let contToChange = this.state.cardsData[cardToChange].contacts.findIndex(
-        (contact) => contact.id === id
-      );
+    submitContactState: (card, contactId) => {
+      let currentCard = this.cardToChange(card);
+      let currentContact = this.contactToChange(currentCard, contactId);
       let dataState = this.state.cardsData;
-      dataState[cardToChange].contacts[contToChange].editing = !dataState[cardToChange]
-        .contacts[contToChange].editing;
+      dataState[currentCard].contacts[currentContact].editing = !dataState[currentCard]
+        .contacts[currentContact].editing;
       this.setState({ cardsData: dataState });
       // Todo: PATCH api call.
     },
 
-    handleContactChange: (value, cardId, contId) => {
-      let cardToChange = this.state.cardsData.findIndex((cards) => cards.id === cardId);
-      let contToChange = this.state.cardsData[cardToChange].contacts.findIndex(
-        (contact) => contact.id === contId
-      );
+    handleContactChange: (value, card, contactId) => {
+      let currentCard = this.cardToChange(card);
+      let currentContact = this.contactToChange(currentCard, contactId);
       let dataState = this.state.cardsData;
-      dataState[cardToChange].contacts[contToChange][value.name] = value.value;
+      dataState[currentCard].contacts[currentContact][value.name] = value.value;
       this.setState({ cardsData: dataState });
     },
 
-    handleAddContactButton: (cardId) => {
-      let cardToChange = this.state.cardsData.findIndex((cards) => cards.id === cardId);
+    handleAddContactButton: (card) => {
+      let currentCard = this.cardToChange(card);
       let dataState = this.state.cardsData;
-      dataState[cardToChange].addingContact = true;
+      dataState[currentCard].addingContact = true;
       this.setState({ cardsData: dataState });
     },
 
-    changeCardComments: (id, value) => {
+    changeCardComments: (card, value) => {
       let dataState = this.state.cardsData;
-      let cardToChange = this.state.cardsData.findIndex((cards) => cards.id === id);
-      dataState[cardToChange].comments = value;
+      let currentCard = this.cardToChange(card);
+      dataState[currentCard].comments = value;
       this.setState({ cardsData: dataState });
     },
 
-    handleAddNewContact: (cardId, values) => {
+    handleAddNewContact: (card, values) => {
       const username = this.state.userName;
       var myHeaders = new Headers();
       myHeaders.append('Content-Type', 'application/json');
@@ -111,18 +116,16 @@ export default class JobCardsMain extends React.Component {
         redirect: 'follow',
       };
 
-      fetch(`${config.API_ENDPOINT}/jobs/${username}/contacts/${cardId}`, requestOptions)
+      fetch(`${config.API_ENDPOINT}/jobs/${username}/contacts/${card}`, requestOptions)
         .then((res) => {
           if (!res.ok) return res.json().then((e) => Promise.reject(e));
           return res.json();
         })
         .then((result) => {
-          let cardToChange = this.state.cardsData.findIndex(
-            (cards) => cards.id === cardId
-          );
+          let currentCard = this.cardToChange(card);
           let dataState = this.state.cardsData;
-          dataState[cardToChange].contacts.push(result);
-          dataState[cardToChange].addingContact = false;
+          dataState[currentCard].contacts.push(result);
+          dataState[currentCard].addingContact = false;
           this.setState({ cardsData: dataState });
         })
         .catch((error) => {
@@ -130,7 +133,7 @@ export default class JobCardsMain extends React.Component {
         });
     },
 
-    handleDeleteContact: (cardId, contId) => {
+    handleDeleteContact: (card, contId) => {
       const username = this.state.userName;
 
       var requestOptions = {
@@ -147,12 +150,10 @@ export default class JobCardsMain extends React.Component {
           return res;
         })
         .then(() => {
-          let cardToChange = this.state.cardsData.findIndex(
-            (cards) => cards.id === cardId
-          );
+          let currentCard = this.cardToChange(card);
           let dataState = this.state.cardsData;
 
-          dataState[cardToChange].contacts = dataState[cardToChange].contacts.filter(
+          dataState[currentCard].contacts = dataState[currentCard].contacts.filter(
             (contact) => contact.id !== contId
           );
 

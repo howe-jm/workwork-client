@@ -84,7 +84,7 @@ export default class ContactsTiles extends React.Component {
                   <img
                     src={require('../images/pencil.png')}
                     onClick={() =>
-                      this.context.cardsFunctions.changeContactState(
+                      this.context.cardsFunctions.changeContactEditState(
                         contact.cardId,
                         contact.id
                       )

@@ -2,7 +2,7 @@ import React from 'react';
 
 export default React.createContext({
   cardFunctions: {
-    changeContactState: () => {},
+    changeContactEditState: () => {},
     submitContactState: () => {},
     handleContactChange: () => {},
     handleAddContactButton: () => {},
