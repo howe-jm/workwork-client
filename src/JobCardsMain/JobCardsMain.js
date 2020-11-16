@@ -179,16 +179,7 @@ export default class JobCardsMain extends React.Component {
         <section className='CardsDisplay'>
           {cardsData.map((card) => (
             <div className='oneCard' key={card.id}>
-              <JobCard
-                card={card}
-                changeContactState={this.changeContactState}
-                changeCardComments={this.changeCardComments}
-                handleContactChange={this.handleContactChange}
-                submitContactState={this.submitContactState}
-                handleAddContactButton={this.handleAddContactButton}
-                handleAddNewContact={this.handleAddNewContact}
-                handleDeleteContact={this.handleDeleteContact}
-              />
+              <JobCard card={card} />
             </div>
           ))}
         </section>

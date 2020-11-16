@@ -60,6 +60,7 @@ export default class JobCard extends React.Component {
   };
 
   newContactForm = () => {
+    const { cardsFunctions } = this.context;
     return (
       <div className='new-contact'>
         <h4>New Contact</h4>
@@ -69,7 +70,7 @@ export default class JobCard extends React.Component {
             name='contactName'
             value={this.state.contacts.contactName}
             onChange={(event) =>
-              this.handleContactChange(event.target.name, event.target.value)
+              cardsFunctions.handleContactChange(event.target.name, event.target.value)
             }
           />
           <label htmlFor='contactTitle'>Title:</label>
@@ -77,7 +78,7 @@ export default class JobCard extends React.Component {
             name='contactTitle'
             value={this.state.contacts.contactTitle}
             onChange={(event) =>
-              this.handleContactChange(event.target.name, event.target.value)
+              cardsFunctions.handleContactChange(event.target.name, event.target.value)
             }
           />
           <label htmlFor='contactName'>Phone:</label>
@@ -85,7 +86,7 @@ export default class JobCard extends React.Component {
             name='contactNumber'
             value={this.state.contacts.contactNumber}
             onChange={(event) =>
-              this.handleContactChange(event.target.name, event.target.value)
+              cardsFunctions.handleContactChange(event.target.name, event.target.value)
             }
           />
           <label htmlFor='contactName'>E-Mail:</label>
@@ -94,14 +95,17 @@ export default class JobCard extends React.Component {
             className='edit-email'
             value={this.state.contacts.contactEmail}
             onChange={(event) =>
-              this.handleContactChange(event.target.name, event.target.value)
+              cardsFunctions.handleContactChange(event.target.name, event.target.value)
             }
           />
           <div className='save-icon'>
             <img
               src={require('../images/save.png')}
               onClick={(e) =>
-                this.props.handleAddNewContact(this.props.id, this.state.contacts)
+                cardsFunctions.handleAddNewContact(
+                  this.props.card.id,
+                  this.state.contacts
+                )
               }
               alt='Save changes'
             />
@@ -113,6 +117,7 @@ export default class JobCard extends React.Component {
 
   render() {
     const { id, companyName, jobTitle, jobUrl, addingContact } = this.props.card;
+    const { cardsFunctions } = this.context;
     return (
       <div>
         <div className='cardTitle'>
@@ -140,7 +145,7 @@ export default class JobCard extends React.Component {
                   contactEmail: '',
                 },
               });
-              return this.props.handleAddContactButton(id);
+              return cardsFunctions.handleAddContactButton(id);
             }}
             alt='Add new contact'
           />
@@ -175,8 +180,10 @@ export default class JobCard extends React.Component {
         <div className='card-comments-container'>
           <form>
             <textarea
-              value={this.props.comments}
-              onChange={(event) => this.props.changeCardComments(id, event.target.value)}
+              value={this.props.card.comments}
+              onChange={(event) =>
+                cardsFunctions.changeCardComments(id, event.target.value)
+              }
             ></textarea>
             <p>
               <button>Save</button>
