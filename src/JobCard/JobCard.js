@@ -1,12 +1,13 @@
 import React from 'react';
 import { format } from 'date-fns';
-import wwContext from '../../wwContext';
+import JobsContext from '../JobsContext';
+import Contacts from '../Contacts/Contacts';
 
 import './JobCard.css';
 import 'react-datepicker/dist/react-datepicker.css';
 
 export default class JobCard extends React.Component {
-  static contextType = wwContext;
+  static contextType = JobsContext;
 
   state = {
     contacts: {
@@ -17,94 +18,11 @@ export default class JobCard extends React.Component {
     },
   };
 
-  contactsTiles = () => {
-    return this.props.contacts.length === 0 ? (
-      <div className='no-contacts'>No contacts yet!</div>
-    ) : (
-      this.props.contacts.map((contact) =>
-        contact.editing ? (
-          <div className='contact' key={contact.id}>
-            <h4>Editing this contact</h4>
-            <form className='edit-form'>
-              <input
-                name='contactName'
-                value={contact.contactName}
-                onChange={(e) =>
-                  this.props.handleContactChange(e.target, contact.cardId, contact.id)
-                }
-              />
-              <input
-                name='contactTitle'
-                value={contact.contactTitle}
-                onChange={(e) =>
-                  this.props.handleContactChange(e.target, contact.cardId, contact.id)
-                }
-              />
-              <input
-                name='contactNumber'
-                value={contact.contactNumber}
-                onChange={(e) =>
-                  this.props.handleContactChange(e.target, contact.cardId, contact.id)
-                }
-              />
-              <input
-                name='contactEmail'
-                className='edit-email'
-                value={contact.contactEmail}
-                onChange={(e) =>
-                  this.props.handleContactChange(e.target, contact.cardId, contact.id)
-                }
-              />
-              <div className='save-icon'>
-                <img
-                  src={require('../../images/save.png')}
-                  onClick={() =>
-                    this.props.submitContactState(contact.cardId, contact.id)
-                  }
-                  alt='Save changes'
-                />
-              </div>
-            </form>
-          </div>
-        ) : (
-          <div className='contact' key={contact.id}>
-            <h4>{contact.contactName}</h4>
-            <p>{contact.contactTitle}</p>
-            <p>{contact.contactNumber}</p>
-            <p className='c-email'>{contact.contactEmail}</p>
-            <div className='cont-buttons'>
-              <form className='contact-mod-form'>
-                <div className='edit-icon'>
-                  <img
-                    src={require('../../images/pencil.png')}
-                    onClick={() =>
-                      this.props.changeContactState(contact.cardId, contact.id)
-                    }
-                    alt='Edit'
-                  />
-                </div>
-                <div className='edit-icon'>
-                  <img
-                    src={require('../../images/delete.png')}
-                    onClick={() =>
-                      this.props.handleDeleteContact(contact.cardId, contact.id)
-                    }
-                    alt='Delete'
-                  />
-                </div>
-              </form>
-            </div>
-          </div>
-        )
-      )
-    );
-  };
-
   eventsTiles = () => {
-    return this.props.events.length === 0 ? (
+    return this.props.card.events.length === 0 ? (
       <div className='no-events'>No events yet!</div>
     ) : (
-      this.props.events.map((event) =>
+      this.props.card.events.map((event) =>
         event.editing ? (
           <div className='event' key={event.id}>
             Editing this event
@@ -117,7 +35,7 @@ export default class JobCard extends React.Component {
             <div className='event-buttons'>
               <form className='event-mod-form'>
                 <div className='edit-icon'>
-                  <img src={require('../../images/delete.png')} alt='Delete' />
+                  <img src={require('../images/delete.png')} alt='Delete' />
                 </div>
               </form>
             </div>
@@ -181,7 +99,7 @@ export default class JobCard extends React.Component {
           />
           <div className='save-icon'>
             <img
-              src={require('../../images/save.png')}
+              src={require('../images/save.png')}
               onClick={(e) =>
                 this.props.handleAddNewContact(this.props.id, this.state.contacts)
               }
@@ -194,8 +112,7 @@ export default class JobCard extends React.Component {
   };
 
   render() {
-    const { id, companyName, jobTitle, jobUrl, addingContact } = this.props;
-
+    const { id, companyName, jobTitle, jobUrl, addingContact } = this.props.card;
     return (
       <div>
         <div className='cardTitle'>
@@ -207,13 +124,13 @@ export default class JobCard extends React.Component {
           <h2>
             Contacts
             <div className='edit-icon'>
-              <img src={require('../../images/down-arrow.png')} alt='Add new contact' />
+              <img src={require('../images/down-arrow.png')} alt='Add new contact' />
             </div>
           </h2>
         </div>
         <div className='edit-icon'>
           <img
-            src={require('../../images/plus.png')}
+            src={require('../images/plus.png')}
             onClick={() => {
               this.setState({
                 contacts: {
@@ -229,25 +146,29 @@ export default class JobCard extends React.Component {
           />
         </div>
         <div className='card-contacts'>
-          {addingContact ? this.newContactForm() : this.contactsTiles()}
+          {addingContact ? (
+            this.newContactForm()
+          ) : (
+            <Contacts contacts={this.props.card.contacts} />
+          )}
         </div>
         <div className='section-header'>
           <h2>
             Events
             <div className='edit-icon'>
-              <img src={require('../../images/down-arrow.png')} alt='Edit' />
+              <img src={require('../images/down-arrow.png')} alt='Edit' />
             </div>
           </h2>
         </div>
         <div className='edit-icon'>
-          <img src={require('../../images/plus.png')} alt='Add new contact' />
+          <img src={require('../images/plus.png')} alt='Add new contact' />
         </div>
         <div className='card-events'>{this.eventsTiles()}</div>
         <div className='section-header'>
           <h2>
             Comments
             <div className='edit-icon'>
-              <img src={require('../../images/down-arrow.png')} alt='Edit' />
+              <img src={require('../images/down-arrow.png')} alt='Edit' />
             </div>
           </h2>
         </div>
