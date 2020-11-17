@@ -175,8 +175,8 @@ export default class Login extends React.Component {
           <p>
             A working login/password system is not yet fully implemented, and is a
             post-grading goal. However, the front and back end components of the app are
-            coded to support multiple users. For the time being, you can simply choose to
-            view/change data for a vareity of sample users below!
+            coded to support multiple users. For the time being, you can create a new
+            user, or choose to view and existing user below.
           </p>
         </div>
         <label>
