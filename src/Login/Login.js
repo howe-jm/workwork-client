@@ -27,7 +27,7 @@ export default class Login extends React.Component {
       redirect: 'follow',
     };
 
-    Promise.all([fetch('http://localhost:8000/api/users/', requestOptions)])
+    Promise.all([fetch(`${config.API_ENDPOINT}/users/`, requestOptions)])
       .then(([users]) => {
         if (!users.ok) return users.json().then((e) => Promise.reject(e));
         return Promise.all([users.json()]);
