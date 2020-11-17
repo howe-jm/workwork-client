@@ -1,8 +1,48 @@
 import React from 'react';
 import JobsContext from '../JobsContext';
+import config from '../config';
 
 export default class ContactsTiles extends React.Component {
+  state = {
+    editContact: {
+      contactId: null,
+      contactName: '',
+      contactTitle: '',
+      contactNumber: '',
+      contactEmail: '',
+    },
+    editing: false,
+    error: false,
+    errorMsg: '',
+  };
   static contextType = JobsContext;
+
+  handleDeleteContact = (card, contId) => {
+    const username = this.context.userName;
+    const caseCard = 'contacts';
+
+    var requestOptions = {
+      method: 'DELETE',
+      redirect: 'follow',
+    };
+
+    fetch(
+      `${config.API_ENDPOINT}/jobs/${username}/contacts/delete/${contId}`,
+      requestOptions
+    )
+      .then((res) => {
+        if (!res.ok) return res.json().then((e) => Promise.reject(e));
+        return res;
+      })
+      .then(() => this.context.cardsFunctions.wipeDataFromState(card, contId, caseCard))
+      .catch((error) => {
+        this.setState({ error: true, errorMsg: `${error}` });
+      });
+  };
+
+  changeContactEditState = () => {
+    this.setState({ editing: !this.state.editing });
+  };
 
   render() {
     return this.context.JobCardState.contactsCollapsed ? (
@@ -11,7 +51,7 @@ export default class ContactsTiles extends React.Component {
       <div className='no-contacts'>No contacts yet!</div>
     ) : (
       this.props.contacts.map((contact) =>
-        contact.editing ? (
+        this.state.editing ? (
           <div className='contact' key={contact.id}>
             <h4>Editing this contact</h4>
             <form className='edit-form'>
@@ -85,24 +125,14 @@ export default class ContactsTiles extends React.Component {
                 <div className='edit-icon'>
                   <img
                     src={require('../images/pencil.png')}
-                    onClick={() =>
-                      this.context.cardsFunctions.changeContactEditState(
-                        contact.cardId,
-                        contact.id
-                      )
-                    }
+                    onClick={() => this.changeContactEditState()}
                     alt='Edit'
                   />
                 </div>
                 <div className='edit-icon'>
                   <img
                     src={require('../images/delete.png')}
-                    onClick={() =>
-                      this.context.cardsFunctions.handleDeleteContact(
-                        contact.cardId,
-                        contact.id
-                      )
-                    }
+                    onClick={() => this.handleDeleteContact(contact.cardId, contact.id)}
                     alt='Delete'
                   />
                 </div>

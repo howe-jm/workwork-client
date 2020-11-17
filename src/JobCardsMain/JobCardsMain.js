@@ -1,7 +1,7 @@
 import React from 'react';
 import './JobCardsMain.css';
 import JobCard from '../JobCard/JobCard';
-import wwContext from '../wwContext';
+import AddJobCard from '../AddJobCard/AddJobCard';
 import JobsContext from '../JobsContext';
 import config from '../config';
 
@@ -12,9 +12,10 @@ export default class JobCardsMain extends React.Component {
     loading: false,
     error: false,
     errorMsg: '',
+    addingCard: false,
   };
 
-  static contextType = wwContext;
+  static contextType = JobsContext;
 
   componentDidMount() {
     this.context.setUserName(this.state.userName);
@@ -61,6 +62,62 @@ export default class JobCardsMain extends React.Component {
   };
 
   cardsFunctions = {
+    pushDataToState: (data, cardId, caseCard) => {
+      switch (caseCard) {
+        case 'contacts': {
+          let currentCard = this.cardToChange(cardId);
+          let dataState = this.state.cardsData;
+          dataState[currentCard].contacts.push(data);
+          dataState[currentCard].addingContact = false;
+          this.setState({ cardsData: dataState });
+          break;
+        }
+        case 'events': {
+          let currentCard = this.cardToChange(cardId);
+          let dataState = this.state.cardsData;
+          data.dateAdded = `${new Date().toISOString()}`;
+          dataState[currentCard].events.push(data);
+          dataState[currentCard].addingEvent = false;
+          this.setState({ cardsData: dataState });
+          break;
+        }
+        default: {
+          let dataState = this.state.cardsData;
+          dataState.push(data);
+          dataState.addingCard = false;
+          this.setState({ cardsData: dataState });
+        }
+      }
+    },
+
+    wipeDataFromState: (cardId, subId, caseCard) => {
+      switch (caseCard) {
+        case 'contacts': {
+          let currentCard = this.cardToChange(cardId);
+          let dataState = this.state.cardsData;
+          dataState[currentCard].contacts = dataState[currentCard].contacts.filter(
+            (contact) => contact.id !== subId
+          );
+          this.setState({ cardsData: dataState });
+          break;
+        }
+        case 'events': {
+          let currentCard = this.cardToChange(cardId);
+          let dataState = this.state.cardsData;
+          dataState[currentCard].events = dataState[currentCard].events.filter(
+            (event) => event.id !== subId
+          );
+          this.setState({ cardsData: dataState });
+          break;
+        }
+        default: {
+          let dataState = this.state.cardsData.filter((card) => card.id !== cardId);
+          this.setState({ cardsData: dataState });
+          break;
+        }
+      }
+    },
+
     changeContactEditState: (card, contactId) => {
       let currentCard = this.cardToChange(card);
       let currentContact = this.contactToChange(currentCard, contactId);
@@ -82,6 +139,11 @@ export default class JobCardsMain extends React.Component {
 
     submitCommentsState: (card) => {
       // Todo: PATCH api call. (Comments)
+    },
+
+    handleAddCardButton: (card) => {
+      this.setState({ addingCard: !this.state.addingCard });
+      console.log(this.state.addingCard);
     },
 
     handleContactChange: (value, card, contactId) => {
@@ -111,100 +173,6 @@ export default class JobCardsMain extends React.Component {
       let currentCard = this.cardToChange(card);
       dataState[currentCard].comments = value;
       this.setState({ cardsData: dataState });
-    },
-
-    handleAddNewContact: (card, values) => {
-      const username = this.state.userName;
-      var myHeaders = new Headers();
-      myHeaders.append('Content-Type', 'application/json');
-
-      var raw = JSON.stringify(values);
-
-      var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow',
-      };
-
-      fetch(`${config.API_ENDPOINT}/jobs/${username}/contacts/${card}`, requestOptions)
-        .then((res) => {
-          if (!res.ok) return res.json().then((e) => Promise.reject(e));
-          return res.json();
-        })
-        .then((result) => {
-          let currentCard = this.cardToChange(card);
-          let dataState = this.state.cardsData;
-          dataState[currentCard].contacts.push(result);
-          dataState[currentCard].addingContact = false;
-          this.setState({ cardsData: dataState });
-        })
-        .catch((error) => {
-          this.setState({ error: true, errorMsg: `${error}` });
-        });
-    },
-
-    handleDeleteContact: (card, contId) => {
-      const username = this.state.userName;
-
-      var requestOptions = {
-        method: 'DELETE',
-        redirect: 'follow',
-      };
-
-      fetch(
-        `${config.API_ENDPOINT}/jobs/${username}/contacts/delete/${contId}`,
-        requestOptions
-      )
-        .then((res) => {
-          if (!res.ok) return res.json().then((e) => Promise.reject(e));
-          return res;
-        })
-        .then(() => {
-          let currentCard = this.cardToChange(card);
-          let dataState = this.state.cardsData;
-
-          dataState[currentCard].contacts = dataState[currentCard].contacts.filter(
-            (contact) => contact.id !== contId
-          );
-
-          this.setState({ cardsData: dataState });
-        })
-        .catch((error) => {
-          console.error({ error });
-        });
-    },
-
-    handleAddNewEvent: (card, values) => {
-      const username = this.state.userName;
-      var myHeaders = new Headers();
-      myHeaders.append('Content-Type', 'application/json');
-
-      var raw = JSON.stringify(values);
-
-      var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow',
-      };
-
-      fetch(`${config.API_ENDPOINT}/jobs/${username}/events/${card}`, requestOptions)
-        .then((res) => {
-          if (!res.ok) return res.json().then((e) => Promise.reject(e));
-          return res.json();
-        })
-        .then((result) => {
-          let currentCard = this.cardToChange(card);
-          let dataState = this.state.cardsData;
-          result.dateAdded = `${new Date().toISOString()}`;
-          dataState[currentCard].events.push(result);
-          dataState[currentCard].addingEvent = false;
-          this.setState({ cardsData: dataState });
-        })
-        .catch((error) => {
-          this.setState({ error: true, errorMsg: `${error}` });
-        });
     },
 
     handleDeleteEvent: (card, eventId) => {
@@ -240,9 +208,11 @@ export default class JobCardsMain extends React.Component {
   };
 
   render() {
-    const { cardsData } = this.state;
+    const { cardsData, addingCard } = this.state;
     const value = {
       cardsFunctions: this.cardsFunctions,
+      jobCardsState: this.state,
+      userName: this.state.userName,
     };
     return this.state.loading ? (
       <div>Loading content...</div>
@@ -256,6 +226,9 @@ export default class JobCardsMain extends React.Component {
               <JobCard card={card} />
             </div>
           ))}
+          <div className='add-card'>
+            <AddJobCard addingCard={addingCard} />
+          </div>
         </section>
       </JobsContext.Provider>
     );

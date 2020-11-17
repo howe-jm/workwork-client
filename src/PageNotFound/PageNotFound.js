@@ -1,10 +1,10 @@
 import React from 'react';
 import ErrorPage from '../ErrorBoundary/ErrorBoundary';
-import wwContext from '../wwContext';
+import JobsContext from '../JobsContext';
 import './PageNotFound.css';
 
 export default class PageNotFound extends React.Component {
-  static contextType = wwContext;
+  static contextType = JobsContext;
 
   render() {
     return (

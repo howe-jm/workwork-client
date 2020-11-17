@@ -1,9 +1,9 @@
 import React from 'react';
 import './Login.css';
-import wwContext from '../wwContext';
+import JobsContext from '../JobsContext';
 
 export default class Login extends React.Component {
-  static contextType = wwContext;
+  static contextType = JobsContext;
 
   render() {
     const currUser = this.context.userName;
@@ -42,11 +42,12 @@ export default class Login extends React.Component {
             individual study items such as books, videos, training courses, and even
             bootcamps and classes, if the user desires.
           </p>
+          <h4>Note:</h4>
           <p>
-            <h4>Note:</h4> A working login/password system is not yet fully implemented,
-            and is a post-grading goal. However, the front and back end components of the
-            app are coded to support multiple users. For the time being, you can simply
-            choose to view/change data for a vareity of sample users below!
+            A working login/password system is not yet fully implemented, and is a
+            post-grading goal. However, the front and back end components of the app are
+            coded to support multiple users. For the time being, you can simply choose to
+            view/change data for a vareity of sample users below!
           </p>
         </div>
         <label>

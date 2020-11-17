@@ -17,6 +17,7 @@ export default class JobCard extends React.Component {
       contactTitle: '',
       contactNumber: '',
       contactEmail: '',
+      editing: false,
       newContactError: false,
       errorMsg: '',
     },
@@ -25,6 +26,7 @@ export default class JobCard extends React.Component {
       dateAdded: '',
       newEventError: false,
     },
+    jobCardsState: this.context.jobCardsState,
     cardCollapsed: true,
     contactsCollapsed: false,
     eventsCollapsed: false,
@@ -94,6 +96,7 @@ export default class JobCard extends React.Component {
       handleContactChange: this.handleContactChange,
       handleEventChange: this.handleEventChange,
       JobCardState: this.state,
+      userName: this.context.userName,
     };
     return (
       <JobsContext.Provider value={value}>

@@ -1,10 +1,10 @@
 import React from 'react';
 import './Header.css';
 
-import wwContext from '../wwContext';
+import JobsContext from '../JobsContext';
 
 export default class Header extends React.Component {
-  static contextType = wwContext;
+  static contextType = JobsContext;
 
   handleSubmit = (event) => {
     event.preventDefault();

@@ -1,10 +1,10 @@
 import React from 'react';
 import './Sidebar.css';
 import { Link } from 'react-router-dom';
-import wwContext from '../wwContext';
+import JobsContext from '../JobsContext';
 
 export default class Sidebar extends React.Component {
-  static contextType = wwContext;
+  static contextType = JobsContext;
 
   render() {
     const userName = this.context.userName;

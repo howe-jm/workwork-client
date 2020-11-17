@@ -1,0 +1,37 @@
+.edit-icon {
+  width: 15px;
+}
+
+.new-card-form {
+  font-size: 0.9em;
+  display: flex;
+  flex-flow: column wrap;
+  align-content: center;
+  width: 100%;
+  line-height: 12px;
+}
+
+.new-card-form input {
+  height: 10px;
+  margin-bottom: 5px;
+}
+
+.new-card-buttons {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+.edit-button {
+  padding: 5px;
+  width: 30px;
+  border: none;
+  background: none;
+}
+
+.save-button {
+  padding: 5px;
+  width: 20px;
+  border: none;
+  background: none;
+}

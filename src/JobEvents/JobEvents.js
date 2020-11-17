@@ -1,9 +1,33 @@
 import React from 'react';
 import JobsContext from '../JobsContext';
 import { format } from 'date-fns';
+import config from '../config';
 
 export default class JobEvents extends React.Component {
   static contextType = JobsContext;
+
+  handleDeleteEvent = (card, eventId) => {
+    const username = this.context.userName;
+    const caseCard = 'events';
+
+    var requestOptions = {
+      method: 'DELETE',
+      redirect: 'follow',
+    };
+
+    fetch(
+      `${config.API_ENDPOINT}/jobs/${username}/events/delete/${eventId}`,
+      requestOptions
+    )
+      .then((res) => {
+        if (!res.ok) return res.json().then((e) => Promise.reject(e));
+        return res;
+      })
+      .then(() => this.context.cardsFunctions.wipeDataFromState(card, eventId, caseCard))
+      .catch((error) => {
+        console.error({ error });
+      });
+  };
 
   render() {
     return this.context.JobCardState.eventsCollapsed ? (
@@ -26,12 +50,7 @@ export default class JobEvents extends React.Component {
                 <div className='edit-icon'>
                   <img
                     src={require('../images/delete.png')}
-                    onClick={() =>
-                      this.context.cardsFunctions.handleDeleteEvent(
-                        event.cardId,
-                        event.id
-                      )
-                    }
+                    onClick={() => this.handleDeleteEvent(event.cardId, event.id)}
                     alt='Delete'
                   />
                 </div>

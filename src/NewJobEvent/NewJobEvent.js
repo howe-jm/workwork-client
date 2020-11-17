@@ -1,15 +1,52 @@
 import React from 'react';
 import JobsContext from '../JobsContext';
 import { format } from 'date-fns';
+import config from '../config';
 
 export default class NewJobEvent extends React.Component {
+  state = {
+    newEvent: {
+      contactType: '',
+    },
+    error: false,
+    errorMsg: '',
+  };
+
   static contextType = JobsContext;
+
+  handleAddNewEvent = (cardId, values) => {
+    const username = this.context.userName;
+    const caseCard = 'events';
+    var myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+
+    var raw = JSON.stringify(values);
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow',
+    };
+
+    fetch(`${config.API_ENDPOINT}/jobs/${username}/events/${cardId}`, requestOptions)
+      .then((res) => {
+        if (!res.ok) return res.json().then((e) => Promise.reject(e));
+        return res.json();
+      })
+      .then((result) =>
+        this.context.cardsFunctions.pushDataToState(result, cardId, caseCard)
+      )
+      .catch((error) => {
+        this.setState({ error: true, errorMsg: `${error}` });
+      });
+  };
 
   verifyEventField = (cardId, eventObj) => {
     const { eventType } = eventObj;
     return !eventType
       ? this.setState({ eventObj: { newEventError: true } })
-      : this.context.cardsFunctions.handleAddNewEvent(cardId, eventObj);
+      : this.handleAddNewEvent(cardId, eventObj);
   };
 
   render() {

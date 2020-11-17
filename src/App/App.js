@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
-import wwContext from '../wwContext';
+import JobsContext from '../JobsContext';
 import ErrorPage from '../ErrorBoundary/ErrorBoundary';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import Header from '../Header/Header';
@@ -39,7 +39,7 @@ export default class App extends React.Component {
       setUserName: this.setUserName,
     };
     return (
-      <wwContext.Provider value={value}>
+      <JobsContext.Provider value={value}>
         <ErrorPage>
           <div>
             <Header />
@@ -47,7 +47,7 @@ export default class App extends React.Component {
             <main className='main-view'>{this.renderMainRoutes()}</main>
           </div>
         </ErrorPage>
-      </wwContext.Provider>
+      </JobsContext.Provider>
     );
   }
 }

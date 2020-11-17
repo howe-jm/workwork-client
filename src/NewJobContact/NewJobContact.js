@@ -1,15 +1,56 @@
 import React from 'react';
 import JobsContext from '../JobsContext';
+import config from '../config';
 import './NewJobContact.css';
 
 export default class NewContact extends React.Component {
+  state = {
+    newContact: {
+      contactName: '',
+      contactTitle: '',
+      contactNumber: '',
+      contactEmail: '',
+    },
+    error: false,
+    errorMsg: '',
+  };
+
   static contextType = JobsContext;
+
+  handleAddNewContact = (cardId, values) => {
+    console.log(this.context);
+    const userName = this.context.userName;
+    const caseCard = 'contacts';
+    var myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+
+    var raw = JSON.stringify(values);
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow',
+    };
+
+    fetch(`${config.API_ENDPOINT}/jobs/${userName}/contacts/${cardId}`, requestOptions)
+      .then((res) => {
+        if (!res.ok) return res.json().then((e) => Promise.reject(e));
+        return res.json();
+      })
+      .then((result) =>
+        this.context.cardsFunctions.pushDataToState(result, cardId, caseCard)
+      )
+      .catch((error) => {
+        this.setState({ error: true, errorMsg: `${error}` });
+      });
+  };
 
   verifyContactFields = (cardId, contactObj) => {
     const { contactName, contactTitle, contactNumber, contactEmail } = contactObj;
     return !contactName || !contactTitle || (!contactNumber && !contactEmail)
       ? this.setState({ contactObj: { newContactError: true } })
-      : this.context.cardsFunctions.handleAddNewContact(cardId, contactObj);
+      : this.handleAddNewContact(cardId, contactObj);
   };
 
   render() {
