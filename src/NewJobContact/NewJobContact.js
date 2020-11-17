@@ -18,7 +18,6 @@ export default class NewContact extends React.Component {
   static contextType = JobsContext;
 
   handleAddNewContact = (cardId, values) => {
-    console.log(this.context);
     const userName = this.context.userName;
     const caseCard = 'contacts';
     var myHeaders = new Headers();

@@ -63,18 +63,17 @@ export default class JobCardsMain extends React.Component {
 
   cardsFunctions = {
     pushDataToState: (data, cardId, caseCard) => {
+      let currentCard = this.cardToChange(cardId);
+      let dataState = this.state.cardsData;
+
       switch (caseCard) {
         case 'contacts': {
-          let currentCard = this.cardToChange(cardId);
-          let dataState = this.state.cardsData;
           dataState[currentCard].contacts.push(data);
           dataState[currentCard].addingContact = false;
           this.setState({ cardsData: dataState });
           break;
         }
         case 'events': {
-          let currentCard = this.cardToChange(cardId);
-          let dataState = this.state.cardsData;
           data.dateAdded = `${new Date().toISOString()}`;
           dataState[currentCard].events.push(data);
           dataState[currentCard].addingEvent = false;
@@ -82,7 +81,6 @@ export default class JobCardsMain extends React.Component {
           break;
         }
         default: {
-          let dataState = this.state.cardsData;
           dataState.push(data);
           dataState.addingCard = false;
           this.setState({ cardsData: dataState });
@@ -91,27 +89,26 @@ export default class JobCardsMain extends React.Component {
     },
 
     wipeDataFromState: (cardId, subId, caseCard) => {
+      let currentCard = this.cardToChange(cardId);
+      let dataState = this.state.cardsData;
+
       switch (caseCard) {
         case 'contacts': {
-          let currentCard = this.cardToChange(cardId);
-          let dataState = this.state.cardsData;
-          dataState[currentCard].contacts = dataState[currentCard].contacts.filter(
-            (contact) => contact.id !== subId
-          );
+          dataState[currentCard].contacts = dataState[
+            this.cardToChange(cardId)
+          ].contacts.filter((contact) => contact.id !== subId);
           this.setState({ cardsData: dataState });
           break;
         }
         case 'events': {
-          let currentCard = this.cardToChange(cardId);
-          let dataState = this.state.cardsData;
-          dataState[currentCard].events = dataState[currentCard].events.filter(
-            (event) => event.id !== subId
-          );
+          dataState[currentCard].events = dataState[
+            this.cardToChange(cardId)
+          ].events.filter((event) => event.id !== subId);
           this.setState({ cardsData: dataState });
           break;
         }
         default: {
-          let dataState = this.state.cardsData.filter((card) => card.id !== cardId);
+          dataState = this.state.cardsData.filter((card) => card.id !== cardId);
           this.setState({ cardsData: dataState });
           break;
         }

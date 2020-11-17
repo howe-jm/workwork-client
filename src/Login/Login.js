@@ -1,13 +1,143 @@
 import React from 'react';
 import './Login.css';
 import JobsContext from '../JobsContext';
+import config from '../config';
 
 export default class Login extends React.Component {
+  state = {
+    users: [],
+    error: false,
+    errorMsg: '',
+    loading: false,
+    newUser: {
+      firstName: '',
+      lastName: '',
+      userName: '',
+    },
+    newUserError: false,
+    newUserErrorMsg: '',
+  };
+
   static contextType = JobsContext;
+
+  componentDidMount() {
+    this.setState({ loading: true });
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+    };
+
+    Promise.all([fetch('http://localhost:8000/api/users/', requestOptions)])
+      .then(([users]) => {
+        if (!users.ok) return users.json().then((e) => Promise.reject(e));
+        return Promise.all([users.json()]);
+      })
+      .then(([users]) => this.setState({ users }))
+      .then(() => this.setState({ loading: false }))
+      .catch((error) => {
+        this.setState({ error: true, errorMsg: `${error}` });
+      });
+  }
+
+  createNewUserForm = () => {
+    return (
+      <div>
+        <form className='new-user-form'>
+          <h3>Create New User</h3>
+          <label htmlFor='firstName'>First Name: </label>
+          <input
+            name='firstName'
+            onChange={(event) =>
+              this.handleNewUserChange(event.target.name, event.target.value)
+            }
+          ></input>
+          <label htmlFor='lastName'>Last Name: </label>
+          <input
+            name='lastName'
+            onChange={(event) =>
+              this.handleNewUserChange(event.target.name, event.target.value)
+            }
+          ></input>
+          <label htmlFor='userName'>Choose a Unique Username: </label>
+          <input
+            name='userName'
+            onChange={(event) =>
+              this.handleNewUserChange(event.target.name, event.target.value)
+            }
+          ></input>
+          <p className='error-text'>
+            {this.state.newUserError && `${this.state.newUserErrorMsg}`}
+          </p>
+          <button
+            name='submitUser'
+            onClick={(e) => {
+              e.preventDefault();
+              this.handleSubmitNewUser();
+            }}
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+    );
+  };
+
+  handleNewUserChange = (name, value) => {
+    let stateData = this.state.newUser;
+    stateData[name] = value;
+    this.setState({ newUser: stateData });
+  };
+
+  handleSubmitNewUser = () => {
+    return this.state.users.find((user) => user.userName === this.state.newUser.userName)
+      ? this.setState({ newUserError: true, newUserErrorMsg: 'Username already exists!' })
+      : !this.state.newUser.firstName &&
+        !this.state.newUser.lastName &&
+        !this.state.newUser.userName
+      ? this.setState({
+          newUserError: true,
+          newUserErrorMsg: 'Cannot submit an empty form!',
+        })
+      : !this.state.newUser.firstName ||
+        !this.state.newUser.lastName ||
+        !this.state.newUser.userName
+      ? this.setState({
+          newUserError: true,
+          newUserErrorMsg: 'Must fill out all fields!',
+        })
+      : this.postNewUser(this.state.newUser);
+  };
+
+  postNewUser = (newUser) => {
+    var myHeaders = new Headers();
+    console.log('Ping!');
+    myHeaders.append('Content-Type', 'application/json');
+
+    var raw = JSON.stringify(newUser);
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow',
+    };
+
+    fetch(`${config.API_ENDPOINT}/users`, requestOptions)
+      .then((res) => {
+        if (!res.ok) return res.json().then((e) => Promise.reject(e));
+        return res.json();
+      })
+      .then((result) => {
+        this.props.history.push(`/${result.userName}/jobs`);
+      })
+      .catch((error) => {
+        this.setState({ error: true, errorMsg: `${error}` });
+      });
+  };
 
   render() {
     const currUser = this.context.userName;
-    var userArray = ['jkrakz', 'smith-j', 'SamIamImaS', 'MagicWord', 'User5'];
+    let userArray = this.state.users.map((user) => user.userName);
     if (userArray) {
       var options = userArray.map((user, i) => {
         return (
@@ -17,7 +147,6 @@ export default class Login extends React.Component {
         );
       });
     }
-    this.context.userName = userArray[0];
     return (
       <section className='login-page'>
         <h2>User Login Page</h2>
@@ -65,6 +194,7 @@ export default class Login extends React.Component {
             </select>
           </div>
         </label>
+        <div>{this.createNewUserForm()}</div>
       </section>
     );
   }

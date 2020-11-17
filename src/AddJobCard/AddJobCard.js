@@ -52,6 +52,8 @@ export default class AddJobCard extends React.Component {
 
   handleSubmitCard = () => {
     this.handleSubmitNewCard(this.state.newCard);
+    this.context.cardsFunctions.handleAddCardButton();
+    this.setState({ newCard: { companyName: '', jobTitle: '', jobUrl: '' } });
   };
 
   render() {

@@ -5,7 +5,7 @@ import config from '../config';
 export default class ContactsTiles extends React.Component {
   state = {
     editContact: {
-      contactId: null,
+      id: null,
       contactName: '',
       contactTitle: '',
       contactNumber: '',
@@ -18,16 +18,16 @@ export default class ContactsTiles extends React.Component {
   static contextType = JobsContext;
 
   handleDeleteContact = (card, contId) => {
-    const username = this.context.userName;
+    const userName = this.context.userName;
     const caseCard = 'contacts';
 
-    var requestOptions = {
+    let requestOptions = {
       method: 'DELETE',
       redirect: 'follow',
     };
 
     fetch(
-      `${config.API_ENDPOINT}/jobs/${username}/contacts/delete/${contId}`,
+      `${config.API_ENDPOINT}/jobs/${userName}/contacts/update/${contId}`,
       requestOptions
     )
       .then((res) => {
@@ -40,8 +40,35 @@ export default class ContactsTiles extends React.Component {
       });
   };
 
-  changeContactEditState = () => {
-    this.setState({ editing: !this.state.editing });
+  handlePatchContact = (contact) => {
+    console.log(contact);
+    const userName = this.context.userName;
+    var myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+
+    let raw = JSON.stringify(contact);
+
+    let requestOptions = {
+      method: 'PATCH',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow',
+    };
+
+    fetch(
+      `${config.API_ENDPOINT}/jobs/${userName}/contacts/update/${contact.id}`,
+      requestOptions
+    )
+      .then((res) => {
+        if (!res.ok) return res.json().then((e) => Promise.reject(e));
+        return res.json();
+      })
+      .then((result) =>
+        this.context.cardsFunctions.submitContactState(result.cardId, result.id)
+      )
+      .catch((error) => {
+        this.setState({ error: true, errorMsg: `${error}` });
+      });
   };
 
   render() {
@@ -51,7 +78,7 @@ export default class ContactsTiles extends React.Component {
       <div className='no-contacts'>No contacts yet!</div>
     ) : (
       this.props.contacts.map((contact) =>
-        this.state.editing ? (
+        contact.editing ? (
           <div className='contact' key={contact.id}>
             <h4>Editing this contact</h4>
             <form className='edit-form'>
@@ -103,12 +130,7 @@ export default class ContactsTiles extends React.Component {
               <div className='save-icon'>
                 <img
                   src={require('../images/save.png')}
-                  onClick={() =>
-                    this.context.cardsFunctions.submitContactState(
-                      contact.cardId,
-                      contact.id
-                    )
-                  }
+                  onClick={() => this.handlePatchContact(contact)}
                   alt='Save changes'
                 />
               </div>
@@ -125,7 +147,12 @@ export default class ContactsTiles extends React.Component {
                 <div className='edit-icon'>
                   <img
                     src={require('../images/pencil.png')}
-                    onClick={() => this.changeContactEditState()}
+                    onClick={() =>
+                      this.context.cardsFunctions.changeContactEditState(
+                        contact.cardId,
+                        contact.id
+                      )
+                    }
                     alt='Edit'
                   />
                 </div>
