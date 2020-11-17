@@ -51,6 +51,16 @@ export default class JobCardsMain extends React.Component {
       });
   }
 
+  cardToChange = (card) => {
+    return this.state.cardsData.findIndex((cards) => cards.id === card);
+  };
+
+  contactToChange = (currentCard, contactId) => {
+    return this.state.cardsData[currentCard].contacts.findIndex(
+      (contact) => contact.id === contactId
+    );
+  };
+
   cardsFunctions = {
     pushDataToState: (data, cardId, caseCard) => {
       let currentCard = this.cardToChange(cardId);

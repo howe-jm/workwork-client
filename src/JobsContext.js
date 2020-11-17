@@ -7,6 +7,7 @@ export default React.createContext({
   },
   userName: '',
   setUserName: () => {},
+  handleContactChange: () => {},
   handleEventChange: () => {},
   JobCardState: {},
   JobCardsState: {},

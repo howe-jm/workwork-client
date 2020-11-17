@@ -4,6 +4,7 @@ import JobContacts from '../JobContacts/JobContacts';
 import NewJobContact from '../NewJobContact/NewJobContact';
 import JobEvents from '../JobEvents/JobEvents';
 import NewJobEvent from '../NewJobEvent/NewJobEvent';
+import config from '../config';
 
 import './JobCard.css';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -68,6 +69,25 @@ export default class JobCard extends React.Component {
     this.setState({ jobCardsState: { cardsData: dataState } });
   };
 
+  handleDeleteCard = (cardId) => {
+    console.log(cardId);
+    const username = this.context.userName;
+    var requestOptions = {
+      method: 'DELETE',
+      redirect: 'follow',
+    };
+
+    fetch(`${config.API_ENDPOINT}/jobs/${username}/cards/${cardId}`, requestOptions)
+      .then((res) => {
+        if (!res.ok) return res.json().then((e) => Promise.reject(e));
+        return res;
+      })
+      .then(() => this.context.cardsFunctions.wipeDataFromState(cardId))
+      .catch((error) => {
+        this.setState({ error: true, errorMsg: `${error}` });
+      });
+  };
+
   clearState = () => {
     this.setState({
       contacts: {
@@ -124,6 +144,13 @@ export default class JobCard extends React.Component {
       <JobsContext.Provider value={value}>
         <div>
           <div className='cardTitle'>
+            <div className='card-delete-icon'>
+              <img
+                src={require('../images/cancel.png')}
+                onClick={() => this.handleDeleteCard(id)}
+                alt='Delete card'
+              />
+            </div>
             <h2>{companyName}</h2>
             <h3>{jobTitle}</h3>
             <p>{jobUrl}</p>
@@ -212,9 +239,9 @@ export default class JobCard extends React.Component {
                         this.changeCardComments(id, event.target.value)
                       }
                     ></textarea>
-                    <p>
-                      <button>Save</button>
-                    </p>
+                    <div className='save-comments'>
+                      <img src={require('../images/save.png')} alt='Save changes' />
+                    </div>
                   </form>
                 )}
               </div>

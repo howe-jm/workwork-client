@@ -76,8 +76,10 @@
   flex-flow: column wrap;
 }
 
-.card-comments-container {
-  border-bottom: 1px solid black;
+.card-comments-container form {
+  display: flex;
+  flex-flow: column wrap;
+  align-content: center;
   margin-bottom: 10px;
 }
 
@@ -90,6 +92,20 @@
 .edit-icon {
   width: 15px;
 }
+
+.card-delete-icon {
+  align-self: flex-end;
+  width: 15px;
+  margin-top: 2px;
+  margin-left: 5px;
+}
+
+.save-comments {
+  align-self: flex-end;
+  width: 20px;
+  border-bottom: 1px solid black;
+}
+
 .save-icon {
   align-self: flex-end;
   width: 15px;
