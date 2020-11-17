@@ -51,7 +51,6 @@ export default class JobCard extends React.Component {
     let dataState = this.state.jobCardsState.cardsData;
     let card = dataState.findIndex((card) => card.id === cardId);
     dataState[card].comments = value;
-    console.log(dataState[card].comments);
     this.setState({ jobCardsState: { cardsData: dataState } });
   };
 
