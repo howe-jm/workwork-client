@@ -26,6 +26,7 @@ export default class JobCard extends React.Component {
       dateAdded: '',
       newEventError: false,
     },
+    comments: '',
     jobCardsState: this.context.jobCardsState,
     cardCollapsed: true,
     contactsCollapsed: false,
@@ -45,6 +46,28 @@ export default class JobCard extends React.Component {
     this.setState({ events: eventsObj });
   };
 
+  changeCardComments = (cardId, value) => {
+    let dataState = this.state.jobCardsState.cardsData;
+    let card = dataState.findIndex((card) => card.id === cardId);
+    dataState[card].comments = value;
+    console.log(dataState[card].comments);
+    this.setState({ jobCardsState: { cardsData: dataState } });
+  };
+
+  handleAddContactButton = (cardId) => {
+    let dataState = this.state.jobCardsState.cardsData;
+    let card = dataState.findIndex((card) => card.id === cardId);
+    dataState[card].addingContact = !dataState[card].addingContact;
+    this.setState({ jobCardsState: { cardsData: dataState } });
+  };
+
+  handleAddEventButton = (cardId) => {
+    let dataState = this.state.jobCardsState.cardsData;
+    let card = dataState.findIndex((card) => card.id === cardId);
+    dataState[card].addingEvent = !dataState[card].addingEvent;
+    this.setState({ jobCardsState: { cardsData: dataState } });
+  };
+
   clearState = () => {
     this.setState({
       contacts: {
@@ -60,12 +83,12 @@ export default class JobCard extends React.Component {
 
   addContactButtonListner = (id) => {
     this.clearState();
-    return this.context.cardsFunctions.handleAddContactButton(id);
+    return this.handleAddContactButton(id);
   };
 
   addEventButtonListner = (id) => {
     this.clearState();
-    return this.context.cardsFunctions.handleAddEventButton(id);
+    return this.handleAddEventButton(id);
   };
 
   handleCollapseContacts = () => {
@@ -90,7 +113,6 @@ export default class JobCard extends React.Component {
       addingContact,
       addingEvent,
     } = this.props.card;
-    const { cardsFunctions } = this.context;
     const value = {
       cardsFunctions: this.context.cardsFunctions,
       handleContactChange: this.handleContactChange,
@@ -187,7 +209,7 @@ export default class JobCard extends React.Component {
                     <textarea
                       value={this.props.card.comments}
                       onChange={(event) =>
-                        cardsFunctions.changeCardComments(id, event.target.value)
+                        this.changeCardComments(id, event.target.value)
                       }
                     ></textarea>
                     <p>

@@ -2,7 +2,7 @@ import React from 'react';
 import JobsContext from '../JobsContext';
 import config from '../config';
 
-export default class ContactsTiles extends React.Component {
+export default class JobContacts extends React.Component {
   state = {
     editContact: {
       id: null,
@@ -11,6 +11,7 @@ export default class ContactsTiles extends React.Component {
       contactNumber: '',
       contactEmail: '',
     },
+    JobCardState: this.context.JobCardState,
     editing: false,
     error: false,
     errorMsg: '',
@@ -41,7 +42,6 @@ export default class ContactsTiles extends React.Component {
   };
 
   handlePatchContact = (contact) => {
-    console.log(contact);
     const userName = this.context.userName;
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
@@ -63,12 +63,42 @@ export default class ContactsTiles extends React.Component {
         if (!res.ok) return res.json().then((e) => Promise.reject(e));
         return res.json();
       })
-      .then((result) =>
-        this.context.cardsFunctions.submitContactState(result.cardId, result.id)
-      )
+      .then((result) => this.submitContactState(result.cardId, result.id))
       .catch((error) => {
         this.setState({ error: true, errorMsg: `${error}` });
       });
+  };
+
+  submitContactState = (cardId, contactId) => {
+    let dataState = this.state.JobCardState.jobCardsState.cardsData;
+    let card = dataState.findIndex((card) => card.id === cardId);
+    let contact = dataState[card].contacts.findIndex(
+      (contact) => contact.id === contactId
+    );
+    dataState[card].contacts[contact].editing = !dataState[card].contacts[contact]
+      .editing;
+    this.setState({ jobCardsState: { cardsData: dataState } });
+  };
+
+  handleContactChange = (event, cardId, contactId) => {
+    let dataState = this.state.JobCardState.jobCardsState.cardsData;
+    let card = dataState.findIndex((card) => card.id === cardId);
+    let contact = dataState[card].contacts.findIndex(
+      (contact) => contact.id === contactId
+    );
+    dataState[card].contacts[contact][event.name] = event.value;
+    this.setState({ jobCardsState: { cardsData: dataState } });
+  };
+
+  changeContactEditState = (cardId, contactId) => {
+    let dataState = this.state.JobCardState.jobCardsState.cardsData;
+    let card = dataState.findIndex((card) => card.id === cardId);
+    let contact = dataState[card].contacts.findIndex(
+      (contact) => contact.id === contactId
+    );
+    dataState[card].contacts[contact].editing = !dataState[card].contacts[contact]
+      .editing;
+    this.setState({ jobCardsState: { cardsData: dataState } });
   };
 
   render() {
@@ -86,33 +116,21 @@ export default class ContactsTiles extends React.Component {
                 name='contactName'
                 value={contact.contactName}
                 onChange={(e) =>
-                  this.context.cardsFunctions.handleContactChange(
-                    e.target,
-                    contact.cardId,
-                    contact.id
-                  )
+                  this.handleContactChange(e.target, contact.cardId, contact.id)
                 }
               />
               <input
                 name='contactTitle'
                 value={contact.contactTitle}
                 onChange={(e) =>
-                  this.context.cardsFunctions.handleContactChange(
-                    e.target,
-                    contact.cardId,
-                    contact.id
-                  )
+                  this.handleContactChange(e.target, contact.cardId, contact.id)
                 }
               />
               <input
                 name='contactNumber'
                 value={contact.contactNumber}
                 onChange={(e) =>
-                  this.context.cardsFunctions.handleContactChange(
-                    e.target,
-                    contact.cardId,
-                    contact.id
-                  )
+                  this.handleContactChange(e.target, contact.cardId, contact.id)
                 }
               />
               <input
@@ -120,11 +138,7 @@ export default class ContactsTiles extends React.Component {
                 className='edit-email'
                 value={contact.contactEmail}
                 onChange={(e) =>
-                  this.context.cardsFunctions.handleContactChange(
-                    e.target,
-                    contact.cardId,
-                    contact.id
-                  )
+                  this.handleContactChange(e.target, contact.cardId, contact.id)
                 }
               />
               <div className='save-icon'>
@@ -148,10 +162,7 @@ export default class ContactsTiles extends React.Component {
                   <img
                     src={require('../images/pencil.png')}
                     onClick={() =>
-                      this.context.cardsFunctions.changeContactEditState(
-                        contact.cardId,
-                        contact.id
-                      )
+                      this.changeContactEditState(contact.cardId, contact.id)
                     }
                     alt='Edit'
                   />

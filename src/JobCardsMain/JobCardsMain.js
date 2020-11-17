@@ -69,6 +69,7 @@ export default class JobCardsMain extends React.Component {
       switch (caseCard) {
         case 'contacts': {
           dataState[currentCard].contacts.push(data);
+          dataState[currentCard].contacts.sort((a, b) => a.dateAdded > b.dateAdded);
           dataState[currentCard].addingContact = false;
           this.setState({ cardsData: dataState });
           break;
@@ -131,16 +132,6 @@ export default class JobCardsMain extends React.Component {
       dataState[currentCard].contacts[currentContact].editing = !dataState[currentCard]
         .contacts[currentContact].editing;
       this.setState({ cardsData: dataState });
-      // Todo: PATCH api call. (Contacts)
-    },
-
-    submitCommentsState: (card) => {
-      // Todo: PATCH api call. (Comments)
-    },
-
-    handleAddCardButton: (card) => {
-      this.setState({ addingCard: !this.state.addingCard });
-      console.log(this.state.addingCard);
     },
 
     handleContactChange: (value, card, contactId) => {
@@ -151,25 +142,9 @@ export default class JobCardsMain extends React.Component {
       this.setState({ cardsData: dataState });
     },
 
-    handleAddContactButton: (card) => {
-      let currentCard = this.cardToChange(card);
-      let dataState = this.state.cardsData;
-      dataState[currentCard].addingContact = !dataState[currentCard].addingContact;
-      this.setState({ cardsData: dataState });
-    },
-
-    handleAddEventButton: (card) => {
-      let currentCard = this.cardToChange(card);
-      let dataState = this.state.cardsData;
-      dataState[currentCard].addingEvent = !dataState[currentCard].addingEvent;
-      this.setState({ cardsData: dataState });
-    },
-
-    changeCardComments: (card, value) => {
-      let dataState = this.state.cardsData;
-      let currentCard = this.cardToChange(card);
-      dataState[currentCard].comments = value;
-      this.setState({ cardsData: dataState });
+    handleAddCardButton: () => {
+      this.setState({ addingCard: !this.state.addingCard });
+      console.log(this.state.addingCard);
     },
   };
 
