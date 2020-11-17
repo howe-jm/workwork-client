@@ -70,7 +70,6 @@ export default class JobCard extends React.Component {
   };
 
   handleDeleteCard = (cardId) => {
-    console.log(cardId);
     const username = this.context.userName;
     var requestOptions = {
       method: 'DELETE',
@@ -86,6 +85,44 @@ export default class JobCard extends React.Component {
       .catch((error) => {
         this.setState({ error: true, errorMsg: `${error}` });
       });
+  };
+
+  handleSubmitComments = (cardId) => {
+    const username = this.context.userName;
+
+    var myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+
+    var raw = JSON.stringify({
+      companyName: this.props.card.companyName,
+      jobTitle: this.props.card.jobTitle,
+      jobUrl: this.props.card.jobUrl,
+      comments: this.props.card.comments,
+    });
+
+    var requestOptions = {
+      method: 'PATCH',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow',
+    };
+
+    fetch(`${config.API_ENDPOINT}/jobs/${username}/cards/${cardId}`, requestOptions)
+      .then((res) => {
+        if (!res.ok) return res.json().then((e) => Promise.reject(e));
+        return res;
+      })
+      .then(() => this.submitCardState(cardId))
+      .catch((error) => {
+        this.setState({ error: true, errorMsg: `${error}` });
+      });
+  };
+
+  submitCardState = (cardId, cardData) => {
+    let dataState = this.state.jobCardsState.cardsData;
+    let card = dataState.findIndex((card) => card.id === cardId);
+    dataState[card] = cardData;
+    this.setState({ jobCardsState: { cardsData: dataState } });
   };
 
   clearState = () => {
@@ -240,7 +277,11 @@ export default class JobCard extends React.Component {
                       }
                     ></textarea>
                     <div className='save-comments'>
-                      <img src={require('../images/save.png')} alt='Save changes' />
+                      <img
+                        src={require('../images/save.png')}
+                        onClick={() => this.handleSubmitComments(this.props.card.id)}
+                        alt='Save changes'
+                      />
                     </div>
                   </form>
                 )}
