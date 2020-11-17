@@ -11,6 +11,7 @@ export default class NewContact extends React.Component {
       contactNumber: '',
       contactEmail: '',
     },
+    jobCardsState: this.context.JobCardsSate,
     error: false,
     errorMsg: '',
   };

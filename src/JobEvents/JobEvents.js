@@ -29,6 +29,16 @@ export default class JobEvents extends React.Component {
       });
   };
 
+  handleContactChange = (event, cardId, eventId) => {
+    let dataState = this.state.JobCardState.jobCardsState.cardsData;
+    let card = dataState.findIndex((card) => card.id === cardId);
+    let eventInd = dataState[card].contacts.findIndex(
+      (eventIn) => eventIn.id === eventId
+    );
+    dataState[card].contacts[eventInd][event.name] = event.value;
+    this.setState({ jobCardsState: { cardsData: dataState } });
+  };
+
   render() {
     return this.context.JobCardState.eventsCollapsed ? (
       <div></div>
