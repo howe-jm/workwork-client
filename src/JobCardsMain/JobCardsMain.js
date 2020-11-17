@@ -174,37 +174,6 @@ export default class JobCardsMain extends React.Component {
       dataState[currentCard].comments = value;
       this.setState({ cardsData: dataState });
     },
-
-    handleDeleteEvent: (card, eventId) => {
-      const username = this.state.userName;
-
-      var requestOptions = {
-        method: 'DELETE',
-        redirect: 'follow',
-      };
-
-      fetch(
-        `${config.API_ENDPOINT}/jobs/${username}/events/delete/${eventId}`,
-        requestOptions
-      )
-        .then((res) => {
-          if (!res.ok) return res.json().then((e) => Promise.reject(e));
-          return res;
-        })
-        .then(() => {
-          let currentCard = this.cardToChange(card);
-          let dataState = this.state.cardsData;
-
-          dataState[currentCard].events = dataState[currentCard].events.filter(
-            (event) => event.id !== eventId
-          );
-
-          this.setState({ cardsData: dataState });
-        })
-        .catch((error) => {
-          console.error({ error });
-        });
-    },
   };
 
   render() {
