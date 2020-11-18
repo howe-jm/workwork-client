@@ -1,23 +1,22 @@
 import React from 'react';
-import JobsContext from '../JobsContext';
+import StudyContext from '../StudyContext';
 import config from '../config';
 
-import './AddJobCard.css';
+import './AddStudyCard.css';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
-export default class AddJobCard extends React.Component {
+export default class AddStudyCard extends React.Component {
   state = {
     newCard: {
-      companyName: '',
-      jobTitle: '',
-      jobUrl: '',
+      trainingName: '',
+      trainingUrl: '',
     },
     error: '',
     errorMsg: '',
   };
 
-  static contextType = JobsContext;
+  static contextType = StudyContext;
 
   handleSubmitNewCard = (values) => {
     const userName = this.context.userName;
@@ -33,15 +32,14 @@ export default class AddJobCard extends React.Component {
       redirect: 'follow',
     };
 
-    fetch(`${config.API_ENDPOINT}/jobs/${userName}/cards/`, requestOptions)
+    fetch(`${config.API_ENDPOINT}/study/${userName}/cards/`, requestOptions)
       .then((res) => {
         if (!res.ok) return res.json().then((e) => Promise.reject(e));
         return res.json();
       })
       .then((result) => {
         result.events = [];
-        result.contacts = [];
-        result.comments = '';
+        result.comments = [];
         this.context.cardsFunctions.pushDataToState(result);
       })
       .catch((error) => {
@@ -58,7 +56,7 @@ export default class AddJobCard extends React.Component {
   handleSubmitCard = () => {
     this.handleSubmitNewCard(this.state.newCard);
     this.context.cardsFunctions.handleAddCardButton();
-    this.setState({ newCard: { companyName: '', jobTitle: '', jobUrl: '' } });
+    this.setState({ newCard: { companyName: '', studyTitle: '', studyUrl: '' } });
   };
 
   render() {
@@ -72,31 +70,23 @@ export default class AddJobCard extends React.Component {
       </div>
     ) : (
       <div>
-        <h4>New Contact</h4>
+        <h4>New Card</h4>
         <form className='new-card-form'>
-          <label htmlFor='companyName'>Company Name:</label>
+          <label htmlFor='trainingName'>Name:</label>
           <input
-            name='companyName'
+            name='trainingName'
             onChange={(event) =>
               this.handleNewCardChange(event.target.name, event.target.value)
             }
             value={this.state.newCard.companyName}
           />
-          <label htmlFor='jobTitle'>Title:</label>
+          <label htmlFor='trainingUrl'>URL:</label>
           <input
-            name='jobTitle'
+            name='trainingUrl'
             onChange={(event) =>
               this.handleNewCardChange(event.target.name, event.target.value)
             }
-            value={this.state.newCard.jobTitle}
-          />
-          <label htmlFor='jobUrl'>URL:</label>
-          <input
-            name='jobUrl'
-            onChange={(event) =>
-              this.handleNewCardChange(event.target.name, event.target.value)
-            }
-            value={this.state.newCard.jobUrl}
+            value={this.state.newCard.studyUrl}
           />
           <div className='new-card-buttons'>
             <div className='edit-icon'>

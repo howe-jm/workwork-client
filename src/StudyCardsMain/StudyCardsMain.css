@@ -1,0 +1,47 @@
+.CardsDisplay {
+  display: flex;
+  width: 100vw;
+  text-align: center;
+  flex-flow: row wrap;
+  margin: 0;
+}
+
+.oneCard {
+  display: flex;
+  flex-flow: column wrap;
+  border: 1px solid black;
+  width: 100vw;
+  justify-content: space-between;
+  line-height: 20%;
+  padding-left: 0.3%;
+}
+
+.add-card {
+  display: flex;
+  flex-flow: column wrap;
+  border: 1px solid black;
+  width: 100vw;
+  justify-content: space-around;
+  line-height: 20%;
+  padding-left: 0.3%;
+}
+
+.add-card-icon {
+  align-self: center;
+  width: 10%;
+}
+
+@media all and (min-width: 900px) {
+  .CardsDisplay {
+    width: 100vw;
+    height: fit-content;
+  }
+  .oneCard {
+    width: 440px;
+    margin: 5px;
+  }
+  .add-card {
+    width: 440px;
+    margin: 5px;
+  }
+}
