@@ -9,6 +9,7 @@ header {
 
 header h1 {
   font-size: 1.7em;
+  margin-top: 10px;
 }
 
 @media all and (min-width: 900px) {
