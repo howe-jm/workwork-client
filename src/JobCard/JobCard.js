@@ -174,6 +174,7 @@ export default class JobCard extends React.Component {
       handleContactChange: this.handleContactChange,
       handleEventChange: this.handleEventChange,
       addContactButtonListner: this.addContactButtonListner,
+      addEventButtonListner: this.addEventButtonListner,
       JobCardState: this.state,
       userName: this.context.userName,
     };

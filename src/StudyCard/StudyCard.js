@@ -113,11 +113,6 @@ export default class StudyCard extends React.Component {
     });
   };
 
-  addContactButtonListner = (id) => {
-    this.clearState();
-    return this.handleAddContactButton(id);
-  };
-
   addEventButtonListner = (id) => {
     this.clearState();
     return this.handleAddEventButton(id);
@@ -142,6 +137,7 @@ export default class StudyCard extends React.Component {
       cardsFunctions: this.context.cardsFunctions,
       handleContactChange: this.handleContactChange,
       handleEventChange: this.handleEventChange,
+      addEventButtonListner: this.addEventButtonListner,
       StudyCardState: this.state,
       userName: this.context.userName,
     };

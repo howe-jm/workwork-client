@@ -22,6 +22,8 @@
 .sidebar a {
   color: #7c7c75;
   font-weight: 700;
+  text-decoration: none;
+  margin: 0 5px;
 }
 
 @media all and (min-width: 900px) {
@@ -37,6 +39,11 @@
     text-align: center;
     border-bottom-right-radius: 40px;
   }
+
+  .sidebar a {
+    margin: 0;
+  }
+
   .sidebar ul {
     display: block;
     text-align: center;

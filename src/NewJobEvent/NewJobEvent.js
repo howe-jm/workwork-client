@@ -50,7 +50,7 @@ export default class NewJobEvent extends React.Component {
   };
 
   render() {
-    const { handleEventChange, JobCardState, cardsFunctions } = this.context;
+    const { handleEventChange, JobCardState, addEventButtonListner } = this.context;
     const { cardId } = this.props;
     return (
       <div className='event'>
@@ -72,7 +72,7 @@ export default class NewJobEvent extends React.Component {
             <div className='save-icon'>
               <img
                 src={require('../images/cancel.png')}
-                onClick={() => cardsFunctions.handleAddEventButton(cardId)}
+                onClick={() => addEventButtonListner(cardId)}
                 alt='Cancel'
               />
             </div>
