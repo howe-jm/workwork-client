@@ -54,7 +54,7 @@ export default class NewContact extends React.Component {
   };
 
   render() {
-    const { handleContactChange, JobCardState, cardsFunctions } = this.context;
+    const { addContactButtonListner, handleContactChange, JobCardState } = this.context;
     const { cardId } = this.props;
     return (
       <div className='new-contact'>
@@ -97,7 +97,7 @@ export default class NewContact extends React.Component {
             <div className='save-icon'>
               <img
                 src={require('../images/cancel.png')}
-                onClick={() => cardsFunctions.handleAddContactButton(cardId)}
+                onClick={() => addContactButtonListner(cardId)}
                 alt='Cancel'
               />
             </div>

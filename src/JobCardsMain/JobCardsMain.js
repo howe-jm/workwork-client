@@ -136,7 +136,6 @@ export default class JobCardsMain extends React.Component {
       <JobsContext.Provider value={value}>
         <section className='CardsDisplay'>
           {cardsData.map((card) => {
-            console.log(card);
             return (
               <div className='oneCard' key={card.id}>
                 <JobCard card={card} />
