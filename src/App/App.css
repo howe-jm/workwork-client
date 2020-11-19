@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  background: #0b080c;
 }
 
 img {
@@ -8,12 +9,12 @@ img {
 }
 
 .main-view {
-  border: 1px solid black;
-  padding-top: 135px;
+  padding-top: 160px;
 }
 
 @media all and (min-width: 900px) {
   .main-view {
-    margin-left: 160px;
+    padding-top: 90px;
+    margin-left: 125px;
   }
 }

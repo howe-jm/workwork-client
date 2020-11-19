@@ -1,8 +1,10 @@
 header {
-  background: grey;
+  background: #303d3b;
+  color: #7c7c75;
   height: 125px;
+  width: 100vw;
   position: fixed;
-  width: 105vw;
+  font-family: 'Arimo', Arial, Helvetica, sans-serif;
 }
 
 header h1 {
@@ -11,9 +13,14 @@ header h1 {
 
 @media all and (min-width: 900px) {
   header {
-    margin-left: 150px;
+    width: 40%;
+    height: 60px;
+    margin-left: 100px;
     margin-top: -10px;
     padding-top: 10px;
+
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
   }
 
   header h1 {

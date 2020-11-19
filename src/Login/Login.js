@@ -149,7 +149,6 @@ export default class Login extends React.Component {
     }
     return (
       <section className='login-page'>
-        <h2>User Login Page</h2>
         <div className='login-text'>
           <h3>Welcome to WorkWork, a Job and Training Tracking App!</h3>
           <p>
@@ -176,25 +175,27 @@ export default class Login extends React.Component {
             A working login/password system is not yet fully implemented, and is a
             post-grading goal. However, the front and back end components of the app are
             coded to support multiple users. For the time being, you can create a new
-            user, or choose to view and existing user below.
+            user, or choose to view an existing user below.
           </p>
         </div>
-        <label>
-          View User
-          <div>
-            <select
-              value={currUser}
-              name='currentUser'
-              onChange={(e) => this.context.setUserName(e.target.value)}
-            >
-              <option key='-1' value=''>
-                Select One
-              </option>
-              {options}
-            </select>
-          </div>
-        </label>
-        <div>{this.createNewUserForm()}</div>
+        <div className='user-select'>
+          <label>
+            View User
+            <div>
+              <select
+                value={currUser}
+                name='currentUser'
+                onChange={(e) => this.context.setUserName(e.target.value)}
+              >
+                <option key='-1' value=''>
+                  Select One
+                </option>
+                {options}
+              </select>
+            </div>
+          </label>
+          <div>{this.createNewUserForm()}</div>
+        </div>
       </section>
     );
   }

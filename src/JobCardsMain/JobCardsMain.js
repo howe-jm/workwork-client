@@ -118,7 +118,6 @@ export default class JobCardsMain extends React.Component {
 
     handleAddCardButton: () => {
       this.setState({ addingCard: !this.state.addingCard });
-      console.log(this.state.addingCard);
     },
   };
 
@@ -136,11 +135,14 @@ export default class JobCardsMain extends React.Component {
     ) : (
       <JobsContext.Provider value={value}>
         <section className='CardsDisplay'>
-          {cardsData.map((card) => (
-            <div className='oneCard' key={card.id}>
-              <JobCard card={card} />
-            </div>
-          ))}
+          {cardsData.map((card) => {
+            console.log(card);
+            return (
+              <div className='oneCard' key={card.id}>
+                <JobCard card={card} />
+              </div>
+            );
+          })}
           <div className='add-card'>
             <AddJobCard addingCard={addingCard} />
           </div>

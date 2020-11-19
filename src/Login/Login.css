@@ -1,10 +1,27 @@
 .login-page {
-  margin-left: 25px;
+  display: flex;
+  flex-flow: column wrap;
   padding-bottom: 100px;
+  color: #d3d0cb;
+  padding: 0;
+  margin: 0;
+}
+
+.login-page {
+  font-family: 'Kanit', Arial, Helvetica, sans-serif;
+}
+
+.login-page h3 {
+  font-family: 'Cabin', Arial, Helvetica, sans-serif;
 }
 
 .login-text {
-  width: 45%;
+  align-self: center;
+  border: 1px solid #393e41;
+  background: #393e41;
+  border-radius: 20px;
+  width: 80vw;
+  padding: 10px;
 }
 
 .new-user-form {
@@ -18,4 +35,36 @@
   margin-top: 10px;
   height: 20px;
   width: 70px;
+  padding-bottom: 1px;
+}
+
+.user-select {
+  align-self: center;
+  border: 1px solid #393e41;
+  background: #393e41;
+  margin-top: 50px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  width: 250px;
+}
+
+@media all and (min-width: 900px) {
+  .login-text {
+    align-self: baseline;
+    border: 1px solid #393e41;
+    background: #393e41;
+    padding: 10px 20px;
+    border-radius: 5px;
+    width: 550px;
+  }
+
+  .user-select {
+    align-self: baseline;
+    border: 1px solid #393e41;
+    background: #393e41;
+    margin-top: 50px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    width: 250px;
+  }
 }
