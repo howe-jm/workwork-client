@@ -147,8 +147,8 @@ export default class StudyCard extends React.Component {
     };
     return (
       <StudyContext.Provider value={value}>
-        <div>
-          <div className='cardTitle'>
+        <div className='card-container'>
+          <div className='card-title'>
             <div className='card-delete-icon'>
               <img
                 src={require('../images/cancel.png')}

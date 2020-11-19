@@ -7,13 +7,12 @@
 }
 
 .oneCard {
+  background: #0b080c;
   display: flex;
   flex-flow: column wrap;
-  border: 1px solid black;
   width: 100vw;
   justify-content: space-between;
   line-height: 20%;
-  padding-left: 0.3%;
 }
 
 .add-card {

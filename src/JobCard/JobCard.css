@@ -1,9 +1,18 @@
-.cardTitle {
-  background: rgb(240, 240, 240);
-  margin: 0 0 35px 0;
+.card-title {
+  background: #5e646e;
+  margin: 0 0 10px 0;
   padding: 5px 0 0 0;
-  width: 98vw;
+  width: 100%;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
   border-bottom: 2px solid black;
+}
+
+.card-container {
+  background: #8f96a1;
+  width: 95vw;
+  border: 2px solid #5e646e;
+  border-radius: 20px;
 }
 
 .card-contacts {
@@ -139,8 +148,9 @@
 }
 
 @media all and (min-width: 900px) {
-  .cardTitle {
-    width: 436px;
+  .card-title {
+    margin: 0 0 10px 0;
+    width: auto;
   }
 
   .card-events {
@@ -149,6 +159,10 @@
 
   .card-contacts {
     width: 432px;
+  }
+
+  .card-container {
+    width: 440px;
   }
 
   .card-comments-container textarea {
