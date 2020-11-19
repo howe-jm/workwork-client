@@ -49,6 +49,10 @@
 }
 
 @media all and (min-width: 900px) {
+  .login-page {
+    flex-flow: row wrap;
+  }
+
   .login-text {
     align-self: baseline;
     border: 1px solid #393e41;
@@ -56,6 +60,7 @@
     padding: 10px 20px;
     border-radius: 5px;
     width: 550px;
+    margin-right: 100px;
   }
 
   .user-select {
