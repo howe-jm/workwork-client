@@ -42,7 +42,8 @@ export default class NewStudyEvent extends React.Component {
       });
   };
 
-  verifyEventField = (cardId, eventObj) => {
+  verifyEventField = (evt, cardId, eventObj) => {
+    evt.preventDefault();
     const { eventType } = eventObj;
     return !eventType
       ? this.setState({ eventObj: { newEventError: true } })
@@ -70,20 +71,22 @@ export default class NewStudyEvent extends React.Component {
           </p>
           <div className='buttons-container'>
             <div className='save-icon'>
-              <img
-                src={require('../images/cancel.png')}
-                onClick={() => addEventButtonListner(cardId)}
-                alt='Cancel'
-              />
+              <button
+                className='card-button'
+                onClick={(evt) => addEventButtonListner(evt, cardId)}
+              >
+                <img src={require('../images/cancel.png')} alt='Cancel' />
+              </button>
             </div>
             <div className='save-icon'>
-              <img
-                src={require('../images/save.png')}
+              <button
+                className='card-button'
                 onClick={(e) =>
-                  this.verifyEventField(this.props.cardId, StudyCardState.events)
+                  this.verifyEventField(e, this.props.cardId, StudyCardState.events)
                 }
-                alt='Save changes'
-              />
+              >
+                <img src={require('../images/save.png')} alt='Save changes' />
+              </button>
             </div>
           </div>
         </form>

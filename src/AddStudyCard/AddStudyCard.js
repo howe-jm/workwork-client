@@ -53,7 +53,8 @@ export default class AddStudyCard extends React.Component {
     this.setState({ newCard: stateData });
   };
 
-  handleSubmitCard = () => {
+  handleSubmitCard = (event) => {
+    event.preventDefault();
     this.handleSubmitNewCard(this.state.newCard);
     this.context.cardsFunctions.handleAddCardButton();
     this.setState({ newCard: { companyName: '', studyTitle: '', studyUrl: '' } });
@@ -61,16 +62,18 @@ export default class AddStudyCard extends React.Component {
 
   render() {
     return !this.props.addingCard ? (
-      <div className='add-card-icon'>
-        <img
-          src={require('../images/plus.png')}
-          onClick={() => this.context.cardsFunctions.handleAddCardButton()}
-          alt='Add new card'
-        />
+      <div className='add-study-card-container'>
+        <h3>Add New Card</h3>
+        <div className='add-card-icon'>
+          <img
+            src={require('../images/plus.png')}
+            onClick={() => this.context.cardsFunctions.handleAddCardButton()}
+            alt='Add new card'
+          />
+        </div>
       </div>
     ) : (
-      <div>
-        <h4>New Card</h4>
+      <div className='add-study-card-container'>
         <form className='new-card-form'>
           <label htmlFor='trainingName'>Name:</label>
           <input
@@ -90,18 +93,23 @@ export default class AddStudyCard extends React.Component {
           />
           <div className='new-card-buttons'>
             <div className='edit-icon'>
-              <img
-                src={require('../images/cancel.png')}
-                onClick={() => this.context.cardsFunctions.handleAddCardButton()}
-                alt='Add new card'
-              />
+              <button
+                type='button'
+                className='card-button'
+                onClick={(event) =>
+                  this.context.cardsFunctions.handleAddCardButton(event)
+                }
+              >
+                <img src={require('../images/cancel.png')} alt='Add new card' />
+              </button>
             </div>
             <div className='edit-icon'>
-              <img
-                src={require('../images/save.png')}
-                onClick={() => this.handleSubmitCard()}
-                alt='Save changes'
-              />
+              <button
+                className='card-button'
+                onClick={(event) => this.handleSubmitCard(event)}
+              >
+                <img src={require('../images/save.png')} alt='Save changes' />
+              </button>
             </div>
           </div>
         </form>

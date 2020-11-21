@@ -39,7 +39,6 @@ export default class NewContact extends React.Component {
         return res.json();
       })
       .then((result) => {
-        console.log('PING!', result);
         return this.context.cardsFunctions.pushDataToState(result, cardId, caseCard);
       })
       .catch((error) => {
@@ -61,7 +60,12 @@ export default class NewContact extends React.Component {
     return (
       <div className='new-contact'>
         <h4>New Contact</h4>
-        <form className='edit-form'>
+        <form
+          className='edit-form'
+          onSubmit={(event) =>
+            this.verifyContactFields(event, this.props.cardId, JobCardState.contacts)
+          }
+        >
           <label htmlFor='contactName'>Name:</label>
           <input
             name='contactName'
@@ -105,16 +109,7 @@ export default class NewContact extends React.Component {
               </button>
             </div>
             <div className='save-icon'>
-              <button
-                className='card-button'
-                onClick={(event) =>
-                  this.verifyContactFields(
-                    event,
-                    this.props.cardId,
-                    JobCardState.contacts
-                  )
-                }
-              >
+              <button className='card-button' type='submit'>
                 <img src={require('../images/save.png')} alt='Save changes' />
               </button>
             </div>

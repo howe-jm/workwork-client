@@ -102,7 +102,6 @@ export default class StudyCardsMain extends React.Component {
 
     handleAddCardButton: () => {
       this.setState({ addingCard: !this.state.addingCard });
-      console.log(this.state.addingCard);
     },
   };
 

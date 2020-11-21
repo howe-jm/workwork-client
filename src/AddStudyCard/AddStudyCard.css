@@ -2,6 +2,19 @@
   width: 15px;
 }
 
+.add-study-card-container {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  background: #5e646e;
+  width: 95vw;
+  border: 2px solid #5e646e;
+  border-radius: 20px;
+  text-align: center;
+  height: 113px;
+  max-height: 113px;
+}
+
 .new-card-form {
   font-size: 0.9em;
   display: flex;
@@ -27,4 +40,10 @@
   width: 30px;
   border: none;
   background: none;
+}
+
+@media all and (min-width: 900px) {
+  .add-study-card-container {
+    width: 440px;
+  }
 }

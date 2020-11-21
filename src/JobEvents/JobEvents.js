@@ -6,7 +6,8 @@ import config from '../config';
 export default class JobEvents extends React.Component {
   static contextType = JobsContext;
 
-  handleDeleteEvent = (card, eventId) => {
+  handleDeleteEvent = (e, card, eventId) => {
+    e.preventDefault();
     const username = this.context.userName;
     const caseCard = 'events';
 
@@ -16,7 +17,7 @@ export default class JobEvents extends React.Component {
     };
 
     fetch(
-      `${config.API_ENDPOINT}/jobs/${username}/events/delete/${eventId}`,
+      `${config.API_ENDPOINT}/jobs/${username}/events/update/${eventId}`,
       requestOptions
     )
       .then((res) => {
@@ -48,11 +49,12 @@ export default class JobEvents extends React.Component {
             <div className='event-buttons'>
               <form className='event-mod-form'>
                 <div className='edit-icon'>
-                  <img
-                    src={require('../images/delete.png')}
-                    onClick={() => this.handleDeleteEvent(event.cardId, event.id)}
-                    alt='Delete'
-                  />
+                  <button
+                    className='card-button'
+                    onClick={(e) => this.handleDeleteEvent(e, event.cardId, event.id)}
+                  >
+                    <img src={require('../images/delete.png')} alt='Delete' />
+                  </button>
                 </div>
               </form>
             </div>

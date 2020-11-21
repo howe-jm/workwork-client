@@ -6,7 +6,8 @@ import config from '../config';
 export default class StudyEvents extends React.Component {
   static contextType = StudyContext;
 
-  handleDeleteEvent = (card, eventId) => {
+  handleDeleteEvent = (evt, card, eventId) => {
+    evt.preventDefault();
     const username = this.context.userName;
     const caseCard = 'events';
 
@@ -48,11 +49,12 @@ export default class StudyEvents extends React.Component {
             <div className='event-buttons'>
               <form className='event-mod-form'>
                 <div className='edit-icon'>
-                  <img
-                    src={require('../images/delete.png')}
-                    onClick={() => this.handleDeleteEvent(event.cardId, event.id)}
-                    alt='Delete'
-                  />
+                  <button
+                    className='card-button'
+                    onClick={(evt) => this.handleDeleteEvent(evt, event.cardId, event.id)}
+                  >
+                    <img src={require('../images/delete.png')} alt='Delete' />
+                  </button>
                 </div>
               </form>
             </div>

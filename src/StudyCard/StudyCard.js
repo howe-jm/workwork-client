@@ -43,7 +43,8 @@ export default class StudyCard extends React.Component {
     this.setState({ studyCardsState: { cardsData: dataState } });
   };
 
-  handleDeleteCard = (cardId) => {
+  handleDeleteCard = (event, cardId) => {
+    event.preventDefault();
     const username = this.context.userName;
     var requestOptions = {
       method: 'DELETE',
@@ -61,7 +62,8 @@ export default class StudyCard extends React.Component {
       });
   };
 
-  handleSubmitComments = (cardId) => {
+  handleSubmitComments = (event, cardId) => {
+    event.preventDefault();
     const username = this.context.userName;
 
     var myHeaders = new Headers();
@@ -72,8 +74,6 @@ export default class StudyCard extends React.Component {
       trainingUrl: this.props.card.trainingUrl,
       comments: this.props.card.comments,
     });
-
-    console.log(raw);
 
     var requestOptions = {
       method: 'PATCH',
@@ -113,21 +113,26 @@ export default class StudyCard extends React.Component {
     });
   };
 
-  addEventButtonListner = (id) => {
+  addEventButtonListner = (event, id) => {
+    event.preventDefault();
     this.clearState();
     return this.handleAddEventButton(id);
   };
 
-  handleCollapseContacts = () => {
+  handleCollapseContacts = (event) => {
+    event.preventDefault();
     this.setState({ contactsCollapsed: !this.state.contactsCollapsed });
   };
-  handleCollapseEvents = () => {
+  handleCollapseEvents = (event) => {
+    event.preventDefault();
     this.setState({ eventsCollapsed: !this.state.eventsCollapsed });
   };
-  handleCollapseComments = () => {
+  handleCollapseComments = (event) => {
+    event.preventDefault();
     this.setState({ commentsCollapsed: !this.state.commentsCollapsed });
   };
-  handleCollapseCard = () => {
+  handleCollapseCard = (event) => {
+    event.preventDefault();
     this.setState({ cardCollapsed: !this.state.cardCollapsed });
   };
 
@@ -146,20 +151,23 @@ export default class StudyCard extends React.Component {
         <div className='card-container'>
           <div className='card-title'>
             <div className='card-delete-icon'>
-              <img
-                src={require('../images/cancel.png')}
-                onClick={() => this.handleDeleteCard(id)}
-                alt='Delete card'
-              />
+              <button
+                className='card-button'
+                onClick={(event) => this.handleDeleteCard(event, id)}
+              >
+                <img src={require('../images/cancel.png')} alt='Delete card' />
+              </button>
             </div>
+
             <h2>{trainingName}</h2>
             <p>{trainingUrl}</p>
             <div className='edit-icon'>
-              <img
-                src={require('../images/down-arrow.png')}
-                onClick={() => this.handleCollapseCard()}
-                alt='Collapse Contacts'
-              />
+              <button
+                className='card-button'
+                onClick={(event) => this.handleCollapseCard(event)}
+              >
+                <img src={require('../images/down-arrow.png')} alt='Collapse Contacts' />
+              </button>
             </div>
           </div>
           {this.state.cardCollapsed ? null : (
@@ -168,20 +176,25 @@ export default class StudyCard extends React.Component {
                 <h2>
                   Events
                   <div className='edit-icon'>
-                    <img
-                      src={require('../images/down-arrow.png')}
-                      onClick={() => this.handleCollapseEvents()}
-                      alt='Collapse Events'
-                    />
+                    <button
+                      className='card-button'
+                      onClick={(event) => this.handleCollapseEvents(event)}
+                    >
+                      <img
+                        src={require('../images/down-arrow.png')}
+                        alt='Collapse Events'
+                      />
+                    </button>
                   </div>
                 </h2>
               </div>
               <div className='edit-icon'>
-                <img
-                  src={require('../images/plus.png')}
-                  onClick={() => this.addEventButtonListner(id)}
-                  alt='Add new contact'
-                />
+                <button
+                  className='card-button'
+                  onClick={(event) => this.addEventButtonListner(event, id)}
+                >
+                  <img src={require('../images/plus.png')} alt='Add new contact' />
+                </button>
               </div>
               <div className='card-events'>
                 {addingEvent ? (
@@ -194,11 +207,15 @@ export default class StudyCard extends React.Component {
                 <h2>
                   Comments
                   <div className='edit-icon'>
-                    <img
-                      src={require('../images/down-arrow.png')}
-                      onClick={() => this.handleCollapseComments()}
-                      alt='Collapse Comments'
-                    />
+                    <button
+                      className='card-button'
+                      onClick={(event) => this.handleCollapseComments(event)}
+                    >
+                      <img
+                        src={require('../images/down-arrow.png')}
+                        alt='Collapse Comments'
+                      />
+                    </button>
                   </div>
                 </h2>
               </div>
@@ -206,7 +223,11 @@ export default class StudyCard extends React.Component {
                 {this.state.commentsCollapsed ? (
                   <div></div>
                 ) : (
-                  <form>
+                  <form
+                    onSubmit={(event) =>
+                      this.handleSubmitComments(event, this.props.card.id)
+                    }
+                  >
                     <textarea
                       value={this.props.card.comments}
                       onChange={(event) =>
@@ -214,11 +235,9 @@ export default class StudyCard extends React.Component {
                       }
                     ></textarea>
                     <div className='save-comments'>
-                      <img
-                        src={require('../images/save.png')}
-                        onClick={() => this.handleSubmitComments(this.props.card.id)}
-                        alt='Save changes'
-                      />
+                      <button type='submit' className='card-button'>
+                        <img src={require('../images/save.png')} alt='Save changes' />
+                      </button>
                     </div>
                   </form>
                 )}
