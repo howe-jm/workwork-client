@@ -18,7 +18,8 @@ export default class JobContacts extends React.Component {
   };
   static contextType = JobsContext;
 
-  handleDeleteContact = (card, contId) => {
+  handleDeleteContact = (event, card, contId) => {
+    event.preventDefault();
     const userName = this.context.userName;
     const caseCard = 'contacts';
 
@@ -41,7 +42,8 @@ export default class JobContacts extends React.Component {
       });
   };
 
-  handlePatchContact = (contact) => {
+  handlePatchContact = (event, contact) => {
+    event.preventDefault();
     const userName = this.context.userName;
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
@@ -90,7 +92,8 @@ export default class JobContacts extends React.Component {
     this.setState({ jobCardsState: { cardsData: dataState } });
   };
 
-  changeContactEditState = (cardId, contactId) => {
+  changeContactEditState = (event, cardId, contactId) => {
+    event.preventDefault();
     let dataState = this.state.JobCardState.jobCardsState.cardsData;
     let card = dataState.findIndex((card) => card.id === cardId);
     let contact = dataState[card].contacts.findIndex(
@@ -142,11 +145,12 @@ export default class JobContacts extends React.Component {
                 }
               />
               <div className='save-icon'>
-                <img
-                  src={require('../images/save.png')}
-                  onClick={() => this.handlePatchContact(contact)}
-                  alt='Save changes'
-                />
+                <button
+                  className='card-button'
+                  onClick={(event) => this.handlePatchContact(event, contact)}
+                >
+                  <img src={require('../images/save.png')} alt='Save changes' />
+                </button>
               </div>
             </form>
           </div>
@@ -159,20 +163,24 @@ export default class JobContacts extends React.Component {
             <div className='cont-buttons'>
               <form className='contact-mod-form'>
                 <div className='edit-icon'>
-                  <img
-                    src={require('../images/pencil.png')}
-                    onClick={() =>
-                      this.changeContactEditState(contact.cardId, contact.id)
+                  <button
+                    className='card-button'
+                    onClick={(event) =>
+                      this.changeContactEditState(event, contact.cardId, contact.id)
                     }
-                    alt='Edit'
-                  />
+                  >
+                    <img src={require('../images/pencil.png')} alt='Edit' />
+                  </button>
                 </div>
                 <div className='edit-icon'>
-                  <img
-                    src={require('../images/delete.png')}
-                    onClick={() => this.handleDeleteContact(contact.cardId, contact.id)}
-                    alt='Delete'
-                  />
+                  <button
+                    className='card-button'
+                    onClick={(event) =>
+                      this.handleDeleteContact(event, contact.cardId, contact.id)
+                    }
+                  >
+                    <img src={require('../images/delete.png')} alt='Delete' />
+                  </button>
                 </div>
               </form>
             </div>

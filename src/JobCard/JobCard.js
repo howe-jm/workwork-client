@@ -68,7 +68,8 @@ export default class JobCard extends React.Component {
     this.setState({ jobCardsState: { cardsData: dataState } });
   };
 
-  handleDeleteCard = (cardId) => {
+  handleDeleteCard = (event, cardId) => {
+    event.preventDefault();
     const username = this.context.userName;
     var requestOptions = {
       method: 'DELETE',
@@ -86,7 +87,8 @@ export default class JobCard extends React.Component {
       });
   };
 
-  handleSubmitComments = (cardId) => {
+  handleSubmitComments = (event, cardId) => {
+    event.preventDefault();
     const username = this.context.userName;
 
     var myHeaders = new Headers();
@@ -137,26 +139,32 @@ export default class JobCard extends React.Component {
     });
   };
 
-  addContactButtonListner = (id) => {
+  addContactButtonListner = (event, id) => {
+    event.preventDefault();
     this.clearState();
     return this.handleAddContactButton(id);
   };
 
-  addEventButtonListner = (id) => {
+  addEventButtonListner = (event, id) => {
+    event.preventDefault();
     this.clearState();
     return this.handleAddEventButton(id);
   };
 
-  handleCollapseContacts = () => {
+  handleCollapseContacts = (event) => {
+    event.preventDefault();
     this.setState({ contactsCollapsed: !this.state.contactsCollapsed });
   };
-  handleCollapseEvents = () => {
+  handleCollapseEvents = (event) => {
+    event.preventDefault();
     this.setState({ eventsCollapsed: !this.state.eventsCollapsed });
   };
-  handleCollapseComments = () => {
+  handleCollapseComments = (event) => {
+    event.preventDefault();
     this.setState({ commentsCollapsed: !this.state.commentsCollapsed });
   };
-  handleCollapseCard = () => {
+  handleCollapseCard = (event) => {
+    event.preventDefault();
     this.setState({ cardCollapsed: !this.state.cardCollapsed });
   };
 
@@ -183,21 +191,23 @@ export default class JobCard extends React.Component {
         <div className='card-container'>
           <div className='card-title'>
             <div className='card-delete-icon'>
-              <img
-                src={require('../images/cancel.png')}
-                onClick={() => this.handleDeleteCard(id)}
-                alt='Delete card'
-              />
+              <button
+                className='card-button'
+                onClick={(event) => this.handleDeleteCard(event, id)}
+              >
+                <img src={require('../images/cancel.png')} alt='Delete card' />
+              </button>
             </div>
             <h2>{companyName}</h2>
             <h3>{jobTitle}</h3>
             <p>{jobUrl}</p>
             <div className='edit-icon'>
-              <img
-                src={require('../images/down-arrow.png')}
-                onClick={() => this.handleCollapseCard()}
-                alt='Collapse Contacts'
-              />
+              <button
+                className='card-button'
+                onClick={(event) => this.handleCollapseCard(event)}
+              >
+                <img src={require('../images/down-arrow.png')} alt='Collapse Contacts' />
+              </button>
             </div>
           </div>
           {this.state.cardCollapsed ? null : (
@@ -206,20 +216,25 @@ export default class JobCard extends React.Component {
                 <h2>
                   Contacts
                   <div className='edit-icon'>
-                    <img
-                      src={require('../images/down-arrow.png')}
-                      onClick={() => this.handleCollapseContacts()}
-                      alt='Collapse Contacts'
-                    />
+                    <button
+                      className='card-button'
+                      onClick={(event) => this.handleCollapseContacts(event)}
+                    >
+                      <img
+                        src={require('../images/down-arrow.png')}
+                        alt='Collapse Contacts'
+                      />
+                    </button>
                   </div>
                 </h2>
               </div>
               <div className='edit-icon'>
-                <img
-                  src={require('../images/plus.png')}
-                  onClick={() => this.addContactButtonListner(id)}
-                  alt='Add new contact'
-                />
+                <button
+                  className='card-button'
+                  onClick={(event) => this.addContactButtonListner(event, id)}
+                >
+                  <img src={require('../images/plus.png')} alt='Add new contact' />
+                </button>
               </div>
               <div className='card-contacts'>
                 {addingContact ? (
@@ -232,21 +247,27 @@ export default class JobCard extends React.Component {
                 <h2>
                   Events
                   <div className='edit-icon'>
-                    <img
-                      src={require('../images/down-arrow.png')}
-                      onClick={() => this.handleCollapseEvents()}
-                      alt='Collapse Events'
-                    />
+                    <button
+                      className='card-button'
+                      onClick={(event) => this.handleCollapseEvents(event)}
+                    >
+                      <img
+                        src={require('../images/down-arrow.png')}
+                        alt='Collapse Events'
+                      />
+                    </button>
                   </div>
                 </h2>
               </div>
               <div className='edit-icon'>
-                <img
-                  src={require('../images/plus.png')}
-                  onClick={() => this.addEventButtonListner(id)}
-                  alt='Add new contact'
-                />
+                <button
+                  className='card-button'
+                  onClick={(event) => this.addEventButtonListner(event, id)}
+                >
+                  <img src={require('../images/plus.png')} alt='Add new contact' />
+                </button>
               </div>
+
               <div className='card-events'>
                 {addingEvent ? (
                   <NewJobEvent cardId={this.props.card.id} />
@@ -258,11 +279,15 @@ export default class JobCard extends React.Component {
                 <h2>
                   Comments
                   <div className='edit-icon'>
-                    <img
-                      src={require('../images/down-arrow.png')}
-                      onClick={() => this.handleCollapseComments()}
-                      alt='Collapse Comments'
-                    />
+                    <button
+                      className='card-button'
+                      onClick={(event) => this.handleCollapseComments(event)}
+                    >
+                      <img
+                        src={require('../images/down-arrow.png')}
+                        alt='Collapse Comments'
+                      />
+                    </button>
                   </div>
                 </h2>
               </div>
@@ -278,11 +303,12 @@ export default class JobCard extends React.Component {
                       }
                     ></textarea>
                     <div className='save-comments'>
-                      <img
-                        src={require('../images/save.png')}
+                      <button
+                        className='card-button'
                         onClick={() => this.handleSubmitComments(this.props.card.id)}
-                        alt='Save changes'
-                      />
+                      >
+                        <img src={require('../images/save.png')} alt='Save changes' />
+                      </button>
                     </div>
                   </form>
                 )}

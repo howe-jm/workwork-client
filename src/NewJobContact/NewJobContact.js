@@ -47,7 +47,8 @@ export default class NewContact extends React.Component {
       });
   };
 
-  verifyContactFields = (cardId, contactObj) => {
+  verifyContactFields = (event, cardId, contactObj) => {
+    event.preventDefault();
     const { contactName, contactTitle, contactNumber, contactEmail } = contactObj;
     return !contactName || !contactTitle || (!contactNumber && !contactEmail)
       ? this.setState({ contactObj: { newContactError: true } })
@@ -96,20 +97,26 @@ export default class NewContact extends React.Component {
           />
           <div className='buttons-container'>
             <div className='save-icon'>
-              <img
-                src={require('../images/cancel.png')}
-                onClick={() => addContactButtonListner(cardId)}
-                alt='Cancel'
-              />
+              <button
+                className='card-button'
+                onClick={(event) => addContactButtonListner(event, cardId)}
+              >
+                <img src={require('../images/cancel.png')} alt='Cancel' />
+              </button>
             </div>
             <div className='save-icon'>
-              <img
-                src={require('../images/save.png')}
-                onClick={(e) =>
-                  this.verifyContactFields(this.props.cardId, JobCardState.contacts)
+              <button
+                className='card-button'
+                onClick={(event) =>
+                  this.verifyContactFields(
+                    event,
+                    this.props.cardId,
+                    JobCardState.contacts
+                  )
                 }
-                alt='Save changes'
-              />
+              >
+                <img src={require('../images/save.png')} alt='Save changes' />
+              </button>
             </div>
           </div>
         </form>

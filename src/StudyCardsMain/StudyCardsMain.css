@@ -14,15 +14,6 @@
   line-height: 20%;
 }
 
-.add-card {
-  display: flex;
-  flex-flow: column wrap;
-  border: 1px solid black;
-  width: 100vw;
-  justify-content: space-around;
-  line-height: 20%;
-}
-
 .add-card-icon {
   align-self: center;
   width: 10%;
