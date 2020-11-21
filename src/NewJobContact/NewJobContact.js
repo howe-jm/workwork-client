@@ -38,9 +38,10 @@ export default class NewContact extends React.Component {
         if (!res.ok) return res.json().then((e) => Promise.reject(e));
         return res.json();
       })
-      .then((result) =>
-        this.context.cardsFunctions.pushDataToState(result, cardId, caseCard)
-      )
+      .then((result) => {
+        console.log('PING!', result);
+        return this.context.cardsFunctions.pushDataToState(result, cardId, caseCard);
+      })
       .catch((error) => {
         this.setState({ error: true, errorMsg: `${error}` });
       });

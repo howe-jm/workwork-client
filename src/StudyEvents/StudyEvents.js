@@ -16,7 +16,7 @@ export default class StudyEvents extends React.Component {
     };
 
     fetch(
-      `${config.API_ENDPOINT}/study/${username}/events/delete/${eventId}`,
+      `${config.API_ENDPOINT}/study/${username}/events/update/${eventId}`,
       requestOptions
     )
       .then((res) => {
