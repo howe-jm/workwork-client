@@ -18,6 +18,7 @@ export default class StudyCard extends React.Component {
     },
     comments: '',
     studyCardsState: this.context.studyCardsState,
+    cardsData: this.context.studyCardsState.cardsData,
     cardCollapsed: true,
     eventsCollapsed: false,
     commentsCollasped: true,
@@ -30,10 +31,10 @@ export default class StudyCard extends React.Component {
   };
 
   changeCardComments = (cardId, value) => {
-    let dataState = this.state.studyCardsState.cardsData;
+    let dataState = this.state.cardsData;
     let card = dataState.findIndex((card) => card.id === cardId);
     dataState[card].comments = value;
-    this.setState({ studyCardsState: { cardsData: dataState } });
+    this.setState({ cardsData: dataState });
   };
 
   handleAddEventButton = (cardId) => {
@@ -87,7 +88,8 @@ export default class StudyCard extends React.Component {
         if (!res.ok) return res.json().then((e) => Promise.reject(e));
         return res;
       })
-      .then(() => this.submitCardState(cardId))
+      .then(() => this.submitCardState(cardId, this.props.card))
+      .then(() => this.setState({ studyCardsState: this.context.studyCardsState }))
       .catch((error) => {
         this.setState({ error: true, errorMsg: `${error}` });
       });
@@ -231,7 +233,7 @@ export default class StudyCard extends React.Component {
                     <textarea
                       value={this.props.card.comments}
                       onChange={(event) =>
-                        this.changeCardComments(id, event.target.value)
+                        this.changeCardComments(this.props.card.id, event.target.value)
                       }
                     ></textarea>
                     <div className='save-comments'>

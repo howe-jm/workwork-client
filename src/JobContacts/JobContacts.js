@@ -1,6 +1,10 @@
 import React from 'react';
 import JobsContext from '../JobsContext';
 import config from '../config';
+import './JobContacts.css';
+
+const expression = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi;
+const regex = new RegExp(expression);
 
 export default class JobContacts extends React.Component {
   state = {
@@ -13,6 +17,8 @@ export default class JobContacts extends React.Component {
     },
     JobCardState: this.context.JobCardState,
     editing: false,
+    validationError: false,
+    validationMsg: '',
     error: false,
     errorMsg: '',
   };
@@ -42,8 +48,24 @@ export default class JobContacts extends React.Component {
       });
   };
 
-  handlePatchContact = (event, contact) => {
+  verifyContactFields = (event, contact) => {
     event.preventDefault();
+    const { contactName, contactTitle, contactEmail, contactNumber } = contact;
+    return !contactName || contactName === ''
+      ? this.setState({ validationError: true, validationMsg: 'Contact Name required!' })
+      : !contactTitle || contactTitle === ''
+      ? this.setState({ validationError: true, validationMsg: 'Contact Title required!' })
+      : (!contactNumber || contactNumber === '') && (!contactEmail || contactEmail === '')
+      ? this.setState({
+          validationError: true,
+          validationMsg: 'Phone number and/or e-mail required!',
+        })
+      : contactEmail && !contactEmail.match(regex)
+      ? this.setState({ validationError: true, validationMsg: 'Invalid e-mail address!' })
+      : this.handlePatchContact(event, contact);
+  };
+
+  handlePatchContact = (event, contact) => {
     const userName = this.context.userName;
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
@@ -83,6 +105,7 @@ export default class JobContacts extends React.Component {
   };
 
   handleContactChange = (event, cardId, contactId) => {
+    this.setState({ validationError: false });
     let dataState = this.state.JobCardState.jobCardsState.cardsData;
     let card = dataState.findIndex((card) => card.id === cardId);
     let contact = dataState[card].contacts.findIndex(
@@ -113,7 +136,12 @@ export default class JobContacts extends React.Component {
       this.props.contacts.map((contact) =>
         contact.editing ? (
           <div className='contact' key={contact.id}>
-            <h4>Editing this contact</h4>
+            {this.state.validationError && (
+              <div className='contact-card-error-text'>
+                <h4>{this.state.validationMsg}</h4>
+              </div>
+            )}
+            {!this.state.validationError && <h4>Editing this contact</h4>}
             <form className='edit-form'>
               <input
                 name='contactName'
@@ -132,12 +160,14 @@ export default class JobContacts extends React.Component {
               <input
                 name='contactNumber'
                 value={contact.contactNumber}
+                placeholder='Phone Number'
                 onChange={(e) =>
                   this.handleContactChange(e.target, contact.cardId, contact.id)
                 }
               />
               <input
                 name='contactEmail'
+                placeholder='E-Mail Address'
                 className='edit-email'
                 value={contact.contactEmail}
                 onChange={(e) =>
@@ -147,7 +177,7 @@ export default class JobContacts extends React.Component {
               <div className='save-icon'>
                 <button
                   className='card-button'
-                  onClick={(event) => this.handlePatchContact(event, contact)}
+                  onClick={(event) => this.verifyContactFields(event, contact)}
                 >
                   <img src={require('../images/save.png')} alt='Save changes' />
                 </button>

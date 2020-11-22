@@ -1,0 +1,18 @@
+.contact {
+  background: rgb(218, 218, 218);
+  line-height: 20%;
+  font-size: 0.9em;
+  padding: 0 4px 4px 4px;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  min-width: 125px;
+  margin-top: 10px;
+}
+
+.contact h3 {
+  font-family: 'Kanit', Arial, Helvetica, sans-serif;
+}
+
+.contact-card-error-text {
+  color: red;
+}

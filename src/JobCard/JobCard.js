@@ -33,6 +33,7 @@ export default class JobCard extends React.Component {
     contactsCollapsed: false,
     eventsCollapsed: false,
     commentsCollasped: true,
+    commentSaved: true,
   };
 
   handleContactChange = (name, value) => {
@@ -48,6 +49,7 @@ export default class JobCard extends React.Component {
   };
 
   changeCardComments = (cardId, value) => {
+    this.setState({ commentSaved: false });
     let dataState = this.state.jobCardsState.cardsData;
     let card = dataState.findIndex((card) => card.id === cardId);
     dataState[card].comments = value;
@@ -89,7 +91,8 @@ export default class JobCard extends React.Component {
 
   handleSubmitComments = (event, cardId) => {
     event.preventDefault();
-    
+    this.setState({ commentSaved: true });
+
     const username = this.context.userName;
 
     var myHeaders = new Headers();
@@ -114,7 +117,7 @@ export default class JobCard extends React.Component {
         if (!res.ok) return res.json().then((e) => Promise.reject(e));
         return res;
       })
-      .then(() => this.submitCardState(cardId))
+      .then(() => this.submitCardState(cardId, this.props.card))
       .catch((error) => {
         this.setState({ error: true, errorMsg: `${error}` });
       });
@@ -303,10 +306,18 @@ export default class JobCard extends React.Component {
                         this.changeCardComments(id, event.target.value)
                       }
                     ></textarea>
+                    {this.state.commentSaved && (
+                      <div className='saved'>Comments Saved!</div>
+                    )}
+                    {!this.state.commentSaved && (
+                      <div className='saved'>Unsaved Comments!</div>
+                    )}
                     <div className='save-comments'>
                       <button
                         className='card-button'
-                        onClick={() => this.handleSubmitComments(this.props.card.id)}
+                        onClick={(event) =>
+                          this.handleSubmitComments(event, this.props.card.id)
+                        }
                       >
                         <img src={require('../images/save.png')} alt='Save changes' />
                       </button>

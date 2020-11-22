@@ -15,9 +15,6 @@
   border-radius: 20px;
   font-family: 'Cabin', Arial, Helvetica, sans-serif;
 }
-.card-container h3 {
-  font-family: 'Kanit', Arial, Helvetica, sans-serif;
-}
 
 .card-contacts {
   display: flex;
@@ -28,16 +25,7 @@
   padding-bottom: 10px;
   border-bottom: 2px solid black;
 }
-.contact {
-  background: rgb(218, 218, 218);
-  line-height: 20%;
-  font-size: 0.9em;
-  padding: 0 4px 4px 4px;
-  border-left: 1px solid black;
-  border-right: 1px solid black;
-  min-width: 125px;
-  margin-top: 10px;
-}
+
 .no-contacts {
   font-size: 1.2rem;
   padding: 20px;
@@ -149,6 +137,11 @@
   height: 8px;
   width: 104px;
   margin-bottom: 1px;
+}
+
+.saved {
+  color: black;
+  margin-top: 10px;
 }
 
 @media all and (min-width: 900px) {

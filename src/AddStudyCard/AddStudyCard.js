@@ -115,7 +115,7 @@ export default class AddStudyCard extends React.Component {
             value={this.state.newCard.studyUrl}
           />
           {this.state.validationError && (
-            <div className='card-error-text'>{this.state.validationMsg}</div>
+            <div className='study-card-error-text'>{this.state.validationMsg}</div>
           )}
           <div className='new-card-buttons'>
             <div className='edit-icon'>
