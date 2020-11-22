@@ -6,8 +6,8 @@ import './AddJobCard.css';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
-var expression = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
-var regex = new RegExp(expression);
+const expression = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+const regex = new RegExp(expression);
 
 export default class AddJobCard extends React.Component {
   state = {
@@ -88,8 +88,6 @@ export default class AddJobCard extends React.Component {
   handleSubmitCard = (event) => {
     event.preventDefault();
     this.validateNewCardForm(event, this.state.newCard);
-    console.log(this.state.validationError);
-    console.log(this.state.validationMsg);
   };
 
   render() {
