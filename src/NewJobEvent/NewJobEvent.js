@@ -72,9 +72,10 @@ export default class NewJobEvent extends React.Component {
               maxLength='25'
               placeholder='Resume Sent, Callback, etc.'
               value={this.context.JobCardState.eventType}
-              onChange={(event) =>
-                handleEventChange(event.target.name, event.target.value)
-              }
+              onChange={(event) => {
+                this.setState({ validationError: false });
+                return handleEventChange(event.target.name, event.target.value);
+              }}
             />
           </p>
           {this.state.validationError && (

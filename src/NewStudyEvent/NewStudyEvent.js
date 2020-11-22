@@ -10,11 +10,14 @@ export default class NewStudyEvent extends React.Component {
     },
     error: false,
     errorMsg: '',
+    validationError: false,
+    validationMsg: '',
   };
 
   static contextType = StudyContext;
 
   handleAddNewEvent = (cardId, values) => {
+    this.setState({ newEvent: { eventType: '' } });
     const username = this.context.userName;
     const caseCard = 'events';
     var myHeaders = new Headers();
@@ -37,16 +40,20 @@ export default class NewStudyEvent extends React.Component {
       .then((result) =>
         this.context.cardsFunctions.pushDataToState(result, cardId, caseCard)
       )
+      .then(() => this.context.handleEventChange('eventType', ''))
       .catch((error) => {
         this.setState({ error: true, errorMsg: `${error}` });
       });
   };
 
-  verifyEventField = (evt, cardId, eventObj) => {
-    evt.preventDefault();
+  verifyEventField = (event, cardId, eventObj) => {
+    event.preventDefault();
     const { eventType } = eventObj;
-    return !eventType
-      ? this.setState({ eventObj: { newEventError: true } })
+    return !eventType || eventType === ''
+      ? this.setState({
+          validationError: true,
+          validationMsg: 'Cannot submit empty event!',
+        })
       : this.handleAddNewEvent(cardId, eventObj);
   };
 
@@ -64,11 +71,15 @@ export default class NewStudyEvent extends React.Component {
               name='eventType'
               placeholder='Resume Sent, Callback, etc.'
               value={this.context.StudyCardState.eventType}
-              onChange={(event) =>
-                handleEventChange(event.target.name, event.target.value)
-              }
+              onChange={(event) => {
+                this.setState({ validationError: false });
+                return handleEventChange(event.target.name, event.target.value);
+              }}
             />
           </p>
+          {this.state.validationError && (
+            <div className='error-text'>{this.state.validationMsg}</div>
+          )}
           <div className='buttons-container'>
             <div className='save-icon'>
               <button

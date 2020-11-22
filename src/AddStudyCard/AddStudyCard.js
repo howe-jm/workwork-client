@@ -15,6 +15,8 @@ export default class AddStudyCard extends React.Component {
       trainingName: '',
       trainingUrl: '',
     },
+    validationError: false,
+    validationMsg: '',
     error: '',
     errorMsg: '',
   };

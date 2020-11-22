@@ -114,6 +114,11 @@
   margin-top: -10px;
 }
 
+.saved {
+  color: black;
+  margin-top: 10px;
+}
+
 @media all and (min-width: 900px) {
   .card-title {
     margin: 0 0 10px 0;

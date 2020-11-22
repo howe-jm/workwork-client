@@ -18,10 +18,10 @@ export default class StudyCard extends React.Component {
     },
     comments: '',
     studyCardsState: this.context.studyCardsState,
-    cardsData: this.context.studyCardsState.cardsData,
     cardCollapsed: true,
     eventsCollapsed: false,
     commentsCollasped: true,
+    commentSaved: true,
   };
 
   handleEventChange = (name, value) => {
@@ -31,7 +31,8 @@ export default class StudyCard extends React.Component {
   };
 
   changeCardComments = (cardId, value) => {
-    let dataState = this.state.cardsData;
+    this.setState({ commentSaved: false });
+    let dataState = this.state.studyCardsState.cardsData;
     let card = dataState.findIndex((card) => card.id === cardId);
     dataState[card].comments = value;
     this.setState({ cardsData: dataState });
@@ -65,6 +66,8 @@ export default class StudyCard extends React.Component {
 
   handleSubmitComments = (event, cardId) => {
     event.preventDefault();
+    this.setState({ commentSaved: true });
+
     const username = this.context.userName;
 
     var myHeaders = new Headers();
@@ -236,6 +239,12 @@ export default class StudyCard extends React.Component {
                         this.changeCardComments(this.props.card.id, event.target.value)
                       }
                     ></textarea>
+                    {this.state.commentSaved && (
+                      <div className='saved'>Comments Saved!</div>
+                    )}
+                    {!this.state.commentSaved && (
+                      <div className='saved'>Unsaved Comments!</div>
+                    )}
                     <div className='save-comments'>
                       <button type='submit' className='card-button'>
                         <img src={require('../images/save.png')} alt='Save changes' />
