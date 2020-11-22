@@ -1,0 +1,12 @@
+.buttons-container {
+  display: flex;
+  width: 75%;
+}
+
+@media all and (min-width: 900px) {
+  .buttons-container {
+    display: flex;
+    width: 75%;
+    margin-right: 0;
+  }
+}

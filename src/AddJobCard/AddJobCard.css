@@ -7,12 +7,12 @@
   flex-flow: column nowrap;
   justify-content: center;
   background: #5e646e;
-  width: 95vw;
+  width: 100vw;
   border: 2px solid #5e646e;
-  border-radius: 20px;
   text-align: center;
   font-family: 'Kanit', Arial, Helvetica, sans-serif;
   height: 138px;
+  margin-top: 15px;
 }
 
 .add-card-container h3 {
@@ -56,5 +56,6 @@
 @media all and (min-width: 900px) {
   .add-card-container {
     width: 440px;
+    margin-top: 0;
   }
 }

@@ -3,16 +3,13 @@
   margin: 0 0 10px 0;
   padding: 5px 0 0 0;
   width: 100%;
-  border-top-left-radius: 17px;
-  border-top-right-radius: 17px;
   border-bottom: 2px solid black;
 }
 
 .card-container {
   background: #8f96a1;
-  width: 95vw;
+  width: 100vw;
   border: 2px solid #5e646e;
-  border-radius: 20px;
   font-family: 'Cabin', Arial, Helvetica, sans-serif;
 }
 .card-container h3 {
