@@ -2,8 +2,10 @@
   height: 3%;
   width: 100vw;
   padding-top: 80px;
+
+  z-index: 1;
   position: fixed;
-  color: #7c7c75;
+  color: #cec497;
   font-family: 'Cabin', sans-serif;
 }
 
@@ -20,24 +22,29 @@
 }
 
 .sidebar a {
-  color: #7c7c75;
+  color: #cec497;
   font-weight: 700;
   text-decoration: none;
   margin: 0 5px;
 }
 
+.welcome-text {
+  font-size: 1.2rem;
+  background: #301637;
+  margin-top: 0px;
+}
+
 @media all and (min-width: 900px) {
   .sidebar {
-    height: 25%;
-    width: 100px;
+    height: 100vh;
+    width: 125px;
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #303d3b;
+    background-color: #301637;
     overflow-x: hidden;
     padding-top: 20px;
     text-align: center;
-    border-bottom-right-radius: 40px;
   }
 
   .sidebar a {
@@ -53,11 +60,11 @@
     margin-top: -50px;
   }
 
-  .logo-box {
+  .welcome-text {
     font-size: 1.2rem;
-    background: #303d3b;
+    background: #301637;
     height: 125px;
-    width: 98px;
-    margin-top: -20px;
+    width: 120px;
+    margin-top: 105px;
   }
 }

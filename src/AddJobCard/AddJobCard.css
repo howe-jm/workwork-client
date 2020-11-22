@@ -11,7 +11,17 @@
   border: 2px solid #5e646e;
   border-radius: 20px;
   text-align: center;
+  font-family: 'Kanit', Arial, Helvetica, sans-serif;
   height: 138px;
+}
+
+.add-card-container h3 {
+  font-family: 'Cabin', Arial, Helvetica, sans-serif;
+}
+
+.card-error-text {
+  color: red;
+  padding: 5px 0 10px 0;
 }
 
 .new-card-form {

@@ -13,7 +13,7 @@ export default class Sidebar extends React.Component {
     return userName ? (
       <div>
         <nav className='sidebar'>
-          <div className='logo-box'>Welcome, {userName}!</div>
+          <div className='welcome-text'>Welcome, {userName}!</div>
           <ul>
             <li>
               <Link to={jobsLink}>Jobs Cards</Link>
@@ -30,7 +30,7 @@ export default class Sidebar extends React.Component {
     ) : (
       <div>
         <nav className='sidebar'>
-          <div className='logo-box'>Select a user to continue!</div>
+          <div className='welcome-text'>Select a user to continue!</div>
         </nav>
       </div>
     );

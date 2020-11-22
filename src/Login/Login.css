@@ -7,6 +7,10 @@
   margin: 0;
 }
 
+.error-text {
+  color: red;
+}
+
 .login-page {
   font-family: 'Kanit', Arial, Helvetica, sans-serif;
 }

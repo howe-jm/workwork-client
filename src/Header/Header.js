@@ -5,7 +5,9 @@ export default class Header extends React.Component {
   render() {
     return (
       <header>
-        <h1>WorkWork</h1>
+        <div className='logo-box'>
+          <img src={require('../images/workwork.png')} alt='Work Work Logo' />
+        </div>
       </header>
     );
   }

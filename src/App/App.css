@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  background: #0b080c;
+  background: #090a0b;
 }
 
 img {
@@ -14,7 +14,7 @@ img {
 
 @media all and (min-width: 900px) {
   .main-view {
-    padding-top: 90px;
-    margin-left: 125px;
+    padding-top: 10px;
+    margin-left: 155px;
   }
 }

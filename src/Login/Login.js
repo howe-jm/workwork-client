@@ -150,6 +150,7 @@ export default class Login extends React.Component {
     return (
       <section className='login-page'>
         <div className='login-text'>
+          <h2>More work!</h2>
           <h3>Welcome to WorkWork, a Job and Training Tracking App!</h3>
           <p>
             I believe it's of the utmost importance that students and recent college and

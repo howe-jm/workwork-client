@@ -89,6 +89,7 @@ export default class JobCard extends React.Component {
 
   handleSubmitComments = (event, cardId) => {
     event.preventDefault();
+    
     const username = this.context.userName;
 
     var myHeaders = new Headers();
