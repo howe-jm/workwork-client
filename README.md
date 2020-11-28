@@ -1,70 +1,72 @@
-# Getting Started with Create React App
+# Welcome to WorkWork!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Hello!
 
-## Available Scripts
+WorkWork is the culmination of all my knowledge so far on creating a full-stack webapp using the PERN stack; PostgreSQL, Express, React, and Node!
 
-In the project directory, you can run:
+WorkWork is an app that will help its users keep track of two very important parts of the post-graduate process: Job leads, and ongoing study. It does so in a familiar, user-friendly, card-based format that allows users to create new cards for jobs and study materials, add to, edit, or comment on them, as well as keep track of the various steps they've taken toward their goals with that particular job or study material.
 
-### `npm start`
+Read on for more information, as well as instructions for deploying this app.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Why WorkWork Exists
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Prior to creating this app, I was on my own when it came to keeping track of jobs I'm interested, and in study materials. My main tools for doing so were a GoogleDocs spreadsheet, and Chrome bookmarks. That's it! I saw a need, even if it was just my own, and created an app to help satisfy that need. Here are the details!
 
-### `npm test`
+### Track Your Career Search
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+WorkWork tracks jobs with cards, similar to those you may have seen on other sites like Trello or Google Projects. The difference is that WorkWork allows for a lot more information to be added to and tracked within thoose cards, including other cards (e.g. contacts for a particular job opportunity), and relevant events! It's as easy as creating a new card, filling out the information about the job when prompted, commenting on it if you'd like, and adding relevant information as you progress. This way, you can see when you made your last outreach call, for example, or recall whether you sent a recently revised resume to your potential employer by checking dates.
 
-### `npm run build`
+### Never Stop Learning
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Equally as important as tracking job leads, if not moreso, keeping tabs on your ongoing learning and projects is important to your success as a developer! Using study cards, you can keep tabs on training material and even a broad overview of any projects you've been working on. Knowing when you last coded just for fun or practice can be important for keeping up to date on your skills, new interests, or portfolio projects, and WorkWork makes it quick and easy to do so.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## How To Use WorkWork
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### First, create a new user account, or choose to view an existing user account.
 
-### `npm run eject`
+Note that this version of the app is more of a 'proof of concept,' though it is essentially fully functional. Any user account you create or view is viewable to anybody else who accesses the app! Consider all information to be public.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+For the time being, it is suggested to use fake names, numbers, etc. to test out the app, or run it locally if you wish to make use of it privately.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Eventually, this app will support fully secure user accounts, and all data will be private.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+#### View and Manipulate Job/Study Cards
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Both sets of cards operate in the same manner; Study cards are functionally the same as Jobs cards, but without additional contact information.
 
-## Learn More
+Viewing cards is simple: Each card starts out collapsed. Click the down arrow in the lower left corner to expand the card, exposing all of its information. You'll see contacts, events, and comments for job cards, and events and comments for study cards! Each section starts expanded, but clicking on the arrow on the left side of the section will collapse it, if desired.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Contacts can be changed at will: Simply click the pencil icon on the bottom of each contact to edit it, to add an e-mail address or change the phone number, for example. When finished, click the floppy disk icon to save changes.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Comments can be added or edited as you please, and you will be notified beneath the text field whether your comments are saved or unsaved. To save them, click the floppy disk icon under the text field.
 
-### Code Splitting
+To delete contacts or events, click the trash can icons beneath them. For entire cards, this icon is in the title area. Note that there is no confirmation for this process (yet!) and it is unreversable (for now!).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+You can use the navigation bar on the left (desktop) or top (mobile) to switch card views, or to change users.
 
-### Analyzing the Bundle Size
+## Deploying the App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Development
 
-### Making a Progressive Web App
+1. Download and deploy the API using the instructions in its README.md. It is located at: https://github.com/howe-jm/workwork-api
+2. Clone this repository and change to its directory: `git clone URL/SSH workwork-client && cd $_`
+3. (a) If you're not a contributor on the main repository, reinitialize the .git: `rm -rf .git && git init`
+4. (b) If you are a contributor, please create a new branch before making any changes!
+5. Install dependencies: `npm install`
+6. Update the API_ENDPOINT variable in config.js, and the .env if using an API key.
+7. Run the app in development mode: `npm start`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Testing
 
-### Advanced Configuration
+Very basic smoke tests are in place. Run them with `npm t`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Deploying live
 
-### Deployment
+1. Build the app for deployment `npm run build`
+2. Deploy the app to a webserver.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+-OR-
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. Link your github repository with Vercel.
+2. Deploy the app to Vercel.
+3. Simply push changes to your repo, and Vercel will pull and deploy the updated code.
