@@ -3,6 +3,7 @@
 }
 
 .add-card-container {
+  color: #e8ebe4;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
