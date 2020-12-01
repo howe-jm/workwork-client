@@ -110,7 +110,6 @@ export default class Login extends React.Component {
 
   postNewUser = (newUser) => {
     var myHeaders = new Headers();
-    console.log('Ping!');
     myHeaders.append('Content-Type', 'application/json');
 
     var raw = JSON.stringify(newUser);

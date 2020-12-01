@@ -4,3 +4,8 @@
   width: 100%;
   justify-content: space-between;
 }
+
+
+.new-contact input {
+  margin-top: 6px;
+}

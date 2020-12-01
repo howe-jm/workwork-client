@@ -2,6 +2,7 @@ import React from 'react';
 import StudyContext from '../StudyContext';
 import { format } from 'date-fns';
 import config from '../config';
+import './StudyEvents.css';
 
 export default class StudyEvents extends React.Component {
   static contextType = StudyContext;
@@ -43,7 +44,7 @@ export default class StudyEvents extends React.Component {
           </div>
         ) : (
           <div className='event' key={event.id}>
-            <p>
+            <p className='event-text'>
               {format(event.dateAdded, 'M/DD/YYYY')}: {event.eventType}
             </p>
             <div className='event-buttons'>

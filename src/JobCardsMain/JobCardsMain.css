@@ -7,7 +7,6 @@
 }
 
 .oneCard {
-  background: #0b080c;
   display: flex;
   flex-flow: column wrap;
   width: 100vw;

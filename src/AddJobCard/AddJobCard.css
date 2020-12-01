@@ -14,6 +14,9 @@
   height: 138px;
   margin-top: 15px;
 }
+.add-card-container input {
+  margin-top: 6px;
+}
 
 .add-card-container h3 {
   font-family: 'Cabin', Arial, Helvetica, sans-serif;
