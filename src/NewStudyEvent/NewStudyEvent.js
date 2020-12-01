@@ -70,6 +70,7 @@ export default class NewStudyEvent extends React.Component {
             <input
               name='eventType'
               placeholder='Resume Sent, Callback, etc.'
+              maxLength='25'
               value={this.context.StudyCardState.eventType}
               onChange={(event) => {
                 this.setState({ validationError: false });
