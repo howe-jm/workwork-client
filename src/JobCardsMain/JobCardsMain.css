@@ -4,6 +4,7 @@
   text-align: center;
   flex-flow: row wrap;
   margin: 0;
+  overflow-x: hidden;
 }
 
 .oneCard {
