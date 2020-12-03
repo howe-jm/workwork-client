@@ -35,9 +35,9 @@ Live App: https://workwork-client.vercel.app/
 Here are some images of the app in action:
 
 
-### WorkWork Client
+## WorkWork Client
 
-## How To Use WorkWork
+### How To Use WorkWork
 
 #### First, create a new user account, or choose to view an existing user account.
 
