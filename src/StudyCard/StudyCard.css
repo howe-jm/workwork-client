@@ -33,6 +33,7 @@
   margin: 0 0 10px 0;
   padding-bottom: 10px;
   border-bottom: 2px solid black;
+  line-height: 10px;
 }
 .event {
   background: rgb(218, 218, 218);
