@@ -20,6 +20,23 @@ WorkWork tracks jobs with cards, similar to those you may have seen on other sit
 
 Equally as important as tracking job leads, if not moreso, keeping tabs on your ongoing learning and projects is important to your success as a developer! Using study cards, you can keep tabs on training material and even a broad overview of any projects you've been working on. Knowing when you last coded just for fun or practice can be important for keeping up to date on your skills, new interests, or portfolio projects, and WorkWork makes it quick and easy to do so.
 
+## Useful Links
+
+WorkWork was designed function as a client dependent on an API server, and as such, requires both ends to be completely functional. Here are the links to the repositories, and a live version of the app:
+
+WorkWork Client Repository: https://github.com/howe-jm/workwork-client
+
+WorkWork API Repository: https://github.com/howe-jm/workwork-api
+
+Live App: https://workwork-client.vercel.app/
+
+## Screenshots
+
+Here are some images of the app in action:
+
+
+### WorkWork Client
+
 ## How To Use WorkWork
 
 #### First, create a new user account, or choose to view an existing user account.
